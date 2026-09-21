@@ -2,6 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": true,
+  "redirects": [
+    { "source": "/atlas", "destination": "/atlas-files/", "permanent": true },
+    { "source": "/atlas/", "destination": "/atlas-files/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -13,4 +17,3 @@
     }
   ]
 }
-

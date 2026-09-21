@@ -7,7 +7,7 @@ This guide is for routine edits by someone who does not want to learn a web fram
 | If you want to change | Edit this file |
 |---|---|
 | Home-page title, summary, pathway groups, or main cautions | `index.html` |
-| Map types, thresholds, filename examples, or interpolation guidance | `atlas/index.html` |
+| Map types, thresholds, filename examples, or interpolation guidance | `atlas-files/index.html` |
 | Step-by-step commands and tutorial prose | `tutorial/index.html` |
 | Manuscript settings, method distinctions, or interpretation language | `methods/index.html` |
 | Software, ROI sources, folders, troubleshooting, QA, or citation | `resources/index.html` |
@@ -134,4 +134,3 @@ Some information appears in more than one place because readers need it in conte
 - The comparison and reference tables in `methods/index.html`.
 - The variables and comments in `examples/mesoconnect_inferior_vta_nac_template.sh`.
 - The scientific guardrails in `README.md` if the distinction itself changes.
-

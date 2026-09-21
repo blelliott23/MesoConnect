@@ -2,6 +2,14 @@
 
 MesoConnect is a human 7T diffusion tractography atlas of seven bilateral mesolimbic pathways. This repository contains the public atlas package, a static tutorial website, an annotated Inferior VTA–NAc application script, selected manuscript figures, and the FSL MNI152 1 mm brain reference used with the atlas.
 
+## Download the atlas
+
+- [Download the complete MesoConnect Atlas ZIP](https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip)
+- [Browse the atlas package on GitHub](data/MesoConnect_Atlas)
+- [Review atlas filenames and map types](https://mesoconnect.vercel.app/atlas-files/)
+
+The ZIP contains all 28 atlas maps, `mesoconnect_subject_counts.csv`, the FSL MNI152 1 mm brain reference, and the package documentation and licensing notices. Its SHA-256 checksum is stored in `downloads/MesoConnect_Atlas.zip.sha256`.
+
 ## What is included
 
 - A responsive overview of the seven pathways and three proposed functional groupings.
@@ -36,7 +44,7 @@ The checker validates local links and assets, duplicate HTML IDs, image alternat
 ```text
 .
 ├── index.html                         # Landing page and atlas overview
-├── atlas/index.html                   # Map types, names, thresholds, downloads
+├── atlas-files/index.html             # Map types, names, thresholds, downloads
 ├── tutorial/index.html                # Eight-step application tutorial
 ├── methods/index.html                 # Atlas methods and parameter distinctions
 ├── resources/index.html               # Software, QA, troubleshooting, citation
@@ -53,6 +61,9 @@ The checker validates local links and assets, duplicate HTML IDs, image alternat
 │   ├── mesoconnect_subject_counts.csv
 │   ├── templates/                     # FSL MNI152 1 mm brain + provenance
 │   └── <seven pathway folders>/       # Left/right overlap_prop and thr50 maps
+├── downloads/
+│   ├── MesoConnect_Atlas.zip           # Complete downloadable atlas package
+│   └── MesoConnect_Atlas.zip.sha256    # Archive integrity checksum
 ├── examples/
 │   └── mesoconnect_inferior_vta_nac_template.sh
 ├── docs/
