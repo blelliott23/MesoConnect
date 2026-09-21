@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#152b4f" />
+    <meta
+      name="description"
+      content="Learn how to use MesoConnect, a probabilistic 7T diffusion MRI atlas of seven bilateral human mesolimbic pathways."
+    />
+    <title>MesoConnect Atlas | Human mesolimbic connectivity</title>
+    <link rel="icon" href="/assets/images/brand/mesoconnect-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <script src="/assets/js/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!--
+      SITE HEADER
+      Repeat this navigation block on every page so the site remains usable even
+      if JavaScript is disabled. Keep the link labels and order synchronized.
+    -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-brand" href="/" aria-label="MesoConnect home">
+          <img src="/assets/images/brand/mesoconnect-mark.svg" alt="" width="38" height="38" />
+          <span>MesoConnect <small>Atlas tutorial</small></span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>
+          <span></span>
+        </button>
+        <nav class="site-nav" aria-label="Primary navigation" data-site-nav data-open="false">
+          <a href="/" aria-current="page">Overview</a>
+          <a href="/atlas/">Atlas files</a>
+          <a href="/tutorial/">Tutorial</a>
+          <a href="/methods/">Methods</a>
+          <a href="/resources/">Resources</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+      <!-- HERO: edit this block for the site's main title and short description. -->
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Human 7T diffusion tractography atlas</p>
+            <h1><span>Introducing</span>MesoConnect</h1>
+            <p class="kicker">
+              A pathway-resolved atlas of human mesolimbic structural connectivity, built to support
+              anatomical localization and reproducible, atlas-guided tractography in independent datasets.
+            </p>
+            <div class="button-row">
+              <a class="button" href="/tutorial/">Start the tutorial <span aria-hidden="true">→</span></a>
+              <a class="button button--light" href="/atlas/">Explore atlas files</a>
+            </div>
+          </div>
+
+          <ul class="hero-stats" aria-label="MesoConnect at a glance">
+            <li><strong>7</strong><span>bilateral mesolimbic pathways</span></li>
+            <li><strong>7T</strong><span>Human Connectome Project diffusion MRI</span></li>
+            <li><strong>173</strong><span>tractography-eligible participants, maximum sample</span></li>
+            <li><strong>1 mm</strong><span>FSL MNI152 atlas grid</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section--white" aria-labelledby="atlas-at-a-glance">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Atlas at a glance</p>
+              <h2 id="atlas-at-a-glance">Seven pathways, three functional groupings</h2>
+            </div>
+            <p>
+              The groupings organize the atlas for navigation. They do not imply a fixed one-pathway,
+              one-function mapping; the pathways are overlapping components of a broader circuit.
+            </p>
+          </div>
+
+          <div class="grid-3">
+            <article class="pathway-group" style="--group-color: var(--orange)">
+              <span class="tag tag--orange">Downward arc</span>
+              <h3>Regulation of motivated behavior</h3>
+              <p>Two separately reconstructed components of the hippocampus–VTA regulatory circuit.</p>
+              <ul class="pathway-list">
+                <li>HPC–NAc–VP</li>
+                <li>VP–VTA</li>
+              </ul>
+            </article>
+
+            <article class="pathway-group" style="--group-color: var(--teal)">
+              <span class="tag tag--teal">Upward arc</span>
+              <h3>Motivated memory</h3>
+              <p>VTA-centered trajectories approaching distinct anterior and posterior hippocampal territories.</p>
+              <ul class="pathway-list">
+                <li>VTA–Anterior HPC</li>
+                <li>VTA–Posterior HPC</li>
+              </ul>
+            </article>
+
+            <article class="pathway-group" style="--group-color: var(--rose)">
+              <span class="tag tag--rose">Direct pathways</span>
+              <h3>Motivated salience and learning</h3>
+              <p>Target-defined VTA trajectories to accumbal and amygdala territories.</p>
+              <ul class="pathway-list">
+                <li>Inferior VTA–NAc</li>
+                <li>Superior VTA–NAc</li>
+                <li>VTA–Amygdala</li>
+              </ul>
+            </article>
+          </div>
+
+          <figure class="figure-placeholder">
+            <img
+              src="/assets/images/manuscript/figure-2-mesoconnect-atlas.png"
+              alt="MesoConnect overview showing group-average pathways and anatomical regions arranged into regulation, motivated-memory, and motivated-salience functional groupings."
+              width="2048"
+              height="1353"
+            />
+            <figcaption>
+              <strong>Figure 2. MesoConnect Mesolimbic Connectivity Atlas.</strong> Group-average pathways and
+              anatomical regions of interest are organized into three proposed functional groupings. Orange indicates
+              each group-average tract at the 50% probability threshold; region colors are defined in the figure.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="how-built">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">From participants to atlas</p>
+              <h2 id="how-built">How MesoConnect was built</h2>
+            </div>
+            <p>
+              Native-space tractograms were converted to voxel maps, transformed to MNI space, aggregated across
+              participants, and thresholded at multiple participant-overlap levels.
+            </p>
+          </div>
+
+          <ol class="workflow-strip" aria-label="Atlas-generation workflow">
+            <li><strong>Streamlines in native space</strong></li>
+            <li><strong>Voxel-wise tract maps</strong></li>
+            <li><strong>Binarized maps in MNI space</strong></li>
+            <li><strong>Group overlap probability</strong></li>
+            <li><strong>Thresholded atlas maps</strong></li>
+          </ol>
+
+          <figure class="figure-placeholder">
+            <img
+              src="/assets/images/manuscript/figure-1-atlas-generation-workflow.jpg"
+              alt="Workflow from subject-native tractograms through binary MNI-space maps and group overlap thresholds to the MesoConnect atlas."
+              width="2048"
+              height="776"
+            />
+            <figcaption>
+              <strong>Figure 1. MesoConnect atlas-generation workflow.</strong> Subject-native tractograms were
+              converted to binary maps, transformed to MNI standard space, aggregated across participants, and
+              thresholded at multiple participant-overlap levels to produce group probabilistic atlases.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section section--navy" aria-labelledby="application-workflow">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Application tutorial</p>
+              <h2 id="application-workflow">Use the 50% atlas as a native-space tractography corridor</h2>
+            </div>
+            <p>
+              The worked example follows the supplied Inferior VTA–NAc shell workflow while replacing lab-specific
+              paths with explicit placeholders.
+            </p>
+          </div>
+
+          <div class="grid-4">
+            <article class="card">
+              <span class="card-number">01</span>
+              <h3>Prepare</h3>
+              <p>Identify the atlas maps, ROIs, diffusion reference, transforms, FOD, gradients, and exclusions.</p>
+            </article>
+            <article class="card">
+              <span class="card-number">02</span>
+              <h3>Build</h3>
+              <p>Dilate the 50% maps and combine them with endpoint ROIs to make an MNI-space corridor.</p>
+            </article>
+            <article class="card">
+              <span class="card-number">03</span>
+              <h3>Transform</h3>
+              <p>Warp binary masks to the participant diffusion grid with nearest-neighbor interpolation.</p>
+            </article>
+            <article class="card">
+              <span class="card-number">04</span>
+              <h3>Track and inspect</h3>
+              <p>Run left and right tractography, then save corridor and streamline quality-control images.</p>
+            </article>
+          </div>
+
+          <div class="button-row" style="margin-top: 2rem">
+            <a class="button button--light" href="/tutorial/">Open all eight steps <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--white" aria-labelledby="use-atlas">
+        <div class="container grid-2">
+          <div>
+            <p class="eyebrow">Applications</p>
+            <h2 id="use-atlas">Use MesoConnect in new datasets</h2>
+          </div>
+          <div>
+            <div class="note">
+              <p>
+                <strong>Use MesoConnect as an anatomical scaffold.</strong> It supports pathway localization,
+                visualization, and reproducible tractography constraints in new datasets.
+              </p>
+            </div>
+            <p style="margin-top: 1.6rem">
+              Pair the atlas maps with pathway-specific anatomy, registration checks, and reproducible tracking parameters.
+            </p>
+            <a class="button button--text" href="/methods/">Read the methods and parameter distinction →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <h2>MesoConnect</h2>
+          <p>A tutorial site for the pathway-resolved human mesolimbic connectivity atlas.</p>
+        </div>
+        <div class="footer-group">
+          <h3>Explore</h3>
+          <a href="/atlas/">Atlas files</a>
+          <a href="/tutorial/">Tutorial</a>
+          <a href="/methods/">Methods</a>
+        </div>
+        <div class="footer-group">
+          <h3>Project</h3>
+          <a href="/resources/#citation">Citation</a>
+          <a href="/resources/#software">Software</a>
+          <a href="/resources/#organization">File organization</a>
+        </div>
+        <p class="footer-meta">MesoConnect Atlas · <span data-current-year>2026</span> · Atlas files and tutorial source are included in this repository.</p>
+      </div>
+    </footer>
+  </body>
+</html>

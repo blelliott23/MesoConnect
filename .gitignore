@@ -1,0 +1,14 @@
+# Local operating-system files
+.DS_Store
+
+# Local preview and editor files
+.vercel/
+.vscode/
+*.log
+
+# Dependency folders (the current site has no runtime dependencies)
+node_modules/
+
+# Optional generated reports
+site-check-report.json
+

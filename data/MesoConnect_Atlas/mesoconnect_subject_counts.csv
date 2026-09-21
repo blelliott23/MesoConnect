@@ -1,0 +1,15 @@
+pathway,hemisphere,folder,file_stem,n_subjects
+Inferior VTA-NAc,left,inferior_vta_nac,left_inferior_vta_nac_mni152_1mm,173
+Inferior VTA-NAc,right,inferior_vta_nac,right_inferior_vta_nac_mni152_1mm,173
+Superior VTA-NAc,left,superior_vta_nac,left_superior_vta_nac_mni152_1mm,173
+Superior VTA-NAc,right,superior_vta_nac,right_superior_vta_nac_mni152_1mm,173
+VTA-Amygdala,left,vta_amygdala,left_vta_amygdala_mni152_1mm,168
+VTA-Amygdala,right,vta_amygdala,right_vta_amygdala_mni152_1mm,168
+VTA-Anterior HPC,left,vta_anterior_hpc,left_vta_anterior_hpc_mni152_1mm,167
+VTA-Anterior HPC,right,vta_anterior_hpc,right_vta_anterior_hpc_mni152_1mm,167
+VTA-Posterior HPC,left,vta_posterior_hpc,left_vta_posterior_hpc_mni152_1mm,168
+VTA-Posterior HPC,right,vta_posterior_hpc,right_vta_posterior_hpc_mni152_1mm,168
+HPC-NAc-VP,left,hpc_nac_vp,left_hpc_nac_vp_mni152_1mm,166
+HPC-NAc-VP,right,hpc_nac_vp,right_hpc_nac_vp_mni152_1mm,166
+VP-VTA,left,vp_vta,left_vp_vta_mni152_1mm,170
+VP-VTA,right,vp_vta,right_vp_vta_mni152_1mm,171

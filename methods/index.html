@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#152b4f" />
+    <meta name="description" content="Methods, pathway-specific tractography parameters, and interpretation guidance for the MesoConnect atlas." />
+    <title>Methods | MesoConnect</title>
+    <link rel="icon" href="/assets/images/brand/mesoconnect-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <script src="/assets/js/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-brand" href="/" aria-label="MesoConnect home">
+          <img src="/assets/images/brand/mesoconnect-mark.svg" alt="" width="38" height="38" />
+          <span>MesoConnect <small>Atlas tutorial</small></span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle><span></span></button>
+        <nav class="site-nav" aria-label="Primary navigation" data-site-nav data-open="false">
+          <a href="/">Overview</a>
+          <a href="/atlas/">Atlas files</a>
+          <a href="/tutorial/">Tutorial</a>
+          <a href="/methods/" aria-current="page">Methods</a>
+          <a href="/resources/">Resources</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+      <header class="page-intro">
+        <div class="container">
+          <ol class="breadcrumb" aria-label="Breadcrumb"><li><a href="/">Home</a></li><li>Methods</li></ol>
+          <p class="eyebrow">Scientific context and reporting</p>
+          <h1>Methods and interpretation</h1>
+          <p class="kicker">
+            Separate how the atlas was generated from how it is applied. That distinction is essential for accurate
+            parameter reporting, quality control, and interpretation.
+          </p>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="container content-with-aside">
+          <aside class="sticky-aside">
+            <nav class="jump-nav" aria-label="On this page">
+              <h2>On this page</h2>
+              <ul>
+                <li><a href="#generation"><span class="jump-number">01</span><span>Atlas generation</span></a></li>
+                <li><a href="#parameter-distinction"><span class="jump-number">02</span><span>Parameter distinction</span></a></li>
+                <li><a href="#pathway-parameters"><span class="jump-number">03</span><span>Pathway settings</span></a></li>
+                <li><a href="#constraints"><span class="jump-number">04</span><span>Anatomical constraints</span></a></li>
+                <li><a href="#applications"><span class="jump-number">05</span><span>Applications</span></a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <article class="prose">
+            <section id="generation">
+              <p class="eyebrow">01 · Atlas generation</p>
+              <h2>Participant-native reconstructions, group-space atlas</h2>
+              <p class="lede">
+                MesoConnect was generated from high-resolution Human Connectome Project 7T diffusion MRI, with
+                anatomically constrained probabilistic tractography performed in participant-native space.
+              </p>
+              <ol>
+                <li>Estimate intensity-normalized white-matter fiber orientation distributions.</li>
+                <li>Reconstruct each pathway with MRtrix3 iFOD2 and pathway-specific anatomical constraints.</li>
+                <li>Clean tractograms and perform slice-wise visual quality control.</li>
+                <li>Convert valid tractograms to binary participant-level voxel maps.</li>
+                <li>Transform binary maps to FSL MNI152 1 mm space.</li>
+                <li>Aggregate maps across participants to form overlap-proportion and count maps.</li>
+                <li>Threshold group maps at participant-overlap levels such as 25%, 50%, and 75%.</li>
+              </ol>
+              <p>
+                All seven bilateral pathways were reconstructed in most of the 173 tractography-eligible participants,
+                with 166–173 usable bilateral reconstructions per pathway in the manuscript analysis.
+              </p>
+            </section>
+
+            <section id="parameter-distinction">
+              <p class="eyebrow">02 · Parameter distinction</p>
+              <h2>Do not merge the example and manuscript settings</h2>
+              <div class="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">Feature</th><th scope="col">Website worked example</th><th scope="col">Manuscript atlas generation</th></tr></thead>
+                  <tbody>
+                    <tr><td>Purpose</td><td>Apply the 50% atlas as a corridor in a new dataset.</td><td>Generate participant pathways that contribute to the atlas.</td></tr>
+                    <tr><td>Pathway shown</td><td>Inferior VTA–NAc only.</td><td>Seven bilateral pathway classes.</td></tr>
+                    <tr><td>Accepted streamlines</td><td>1,000</td><td>2,500</td></tr>
+                    <tr><td>Maximum seeding attempts</td><td>10,000,000</td><td>25,000,000</td></tr>
+                    <tr><td>Inferior VTA–NAc FOD cutoff</td><td>0.05</td><td>0.03</td></tr>
+                    <tr><td>Core geometry constraint</td><td>Two-pass-dilated 50% group atlas corridor.</td><td>Pathway-specific seed, inclusion, exclusion, length, angle, and cutoff settings.</td></tr>
+                    <tr><td>Interpretation</td><td>Atlas-constrained application; not an independent atlas validation.</td><td>Native-space reconstructions used to build group probability maps.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="warning">
+                <p>
+                  <strong>Report what you actually ran.</strong> If you modify a threshold, dilation, cutoff, seed,
+                  target, exclusion, angle, step, length, or stopping rule, record the deviation instead of describing
+                  the analysis as an unchanged MesoConnect workflow.
+                </p>
+              </div>
+            </section>
+
+            <section id="pathway-parameters">
+              <p class="eyebrow">03 · Pathway settings</p>
+              <h2>Atlas-generation reference parameters</h2>
+              <p>
+                The table below summarizes the manuscript’s core tractography settings. It is provided for methods
+                reference and should not be used as a substitute for the full pathway-specific commands and masks.
+              </p>
+              <div class="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">Pathway</th><th scope="col">Seed and required inclusion order</th><th scope="col">FOD cutoff</th><th scope="col">Length</th><th scope="col">Angle</th><th scope="col">Step</th></tr></thead>
+                  <tbody>
+                    <tr><td>Inferior VTA–NAc</td><td>VTA → ipsilateral NAc</td><td>0.03</td><td>8–35 mm</td><td>7°</td><td>0.25 mm</td></tr>
+                    <tr><td>Superior VTA–NAc</td><td>VTA → ipsilateral NAc</td><td>0.03</td><td>8–35 mm</td><td>Default</td><td>Default</td></tr>
+                    <tr><td>VTA–Amygdala</td><td>VTA → ipsilateral amygdala</td><td>0.08</td><td>27–40 mm</td><td>Default</td><td>Default</td></tr>
+                    <tr><td>VTA–Posterior HPC</td><td>VTA → ipsilateral posterior HPC</td><td>0.06</td><td>35–65 mm</td><td>Default</td><td>Default</td></tr>
+                    <tr><td>VTA–Anterior HPC</td><td>VTA → ipsilateral anterior HPC</td><td>0.06</td><td>35–65 mm</td><td>Default</td><td>Default</td></tr>
+                    <tr><td>HPC–NAc–VP</td><td>HPC → fornix → NAc → VP</td><td>0.04</td><td>Minimum 5 mm; no maximum</td><td>Default</td><td>Default</td></tr>
+                    <tr><td>VP–VTA</td><td>VP → VTA</td><td>0.03</td><td>15–25 mm</td><td>15°</td><td>Default</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>
+                All rows used the normalized white-matter FOD, unidirectional seeding, 2,500 accepted streamlines, a
+                ceiling of 25 million seeding attempts, and the <code>-stop</code> option. No ACT or backtracking flags
+                were used in the reported atlas-generation workflow.
+              </p>
+            </section>
+
+            <section id="constraints">
+              <p class="eyebrow">04 · Anatomical constraints</p>
+              <h2>The atlas corridor does not replace anatomy</h2>
+              <p>
+                Each pathway requires seed, target or waypoint, and exclusion logic that reflects its anatomy. The
+                manuscript commands used combinations of the following resources, depending on pathway:
+              </p>
+              <div class="grid-2">
+                <article class="card"><h3>Endpoint and waypoint regions</h3><p>VTA, anterior or posterior HPC, amygdala, NAc, VP, and fornix.</p></article>
+                <article class="card"><h3>Broad tissue exclusions</h3><p>Cortical gray matter, cerebellum, thalamus, and inferior brainstem.</p></article>
+                <article class="card"><h3>Local anatomical exclusions</h3><p>Red nucleus, lateral hypothalamus, mammillary bodies, optic structures, or striatum when appropriate.</p></article>
+                <article class="card"><h3>Laterality</h3><p>Contralateral hemisphere and contralateral target masks to enforce ipsilateral tracking.</p></article>
+              </div>
+              <p>
+                For the VTA–HPC and VTA–amygdala reconstructions, the fornix body was excluded so the streamlines did
+                not follow an unintended fornical route. The Inferior and Superior VTA–NAc pathways used different
+                anterior-commissure exclusions to separate their trajectories.
+              </p>
+            </section>
+
+            <section id="applications">
+              <p class="eyebrow">05 · Applications</p>
+              <h2>Apply the atlas reproducibly</h2>
+              <p>
+                Use pathway-specific anatomy, transforms, tracking parameters, and visual quality control when applying
+                MesoConnect to a new dataset. Record the atlas release and every derived mask with the analysis outputs.
+              </p>
+              <div class="note">
+                <p>
+                  <strong>Recommended use:</strong> treat MesoConnect as a reproducible, anatomically constrained framework for
+                  testing how distinct but interacting mesolimbic pathways relate to cognition, behavior, and disease.
+                </p>
+              </div>
+              <div class="button-row" style="margin-top: 1.8rem">
+                <a class="button" href="/tutorial/">Apply the worked example →</a>
+                <a class="button button--light" href="/resources/#citation">Citation guidance</a>
+              </div>
+            </section>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand"><h2>MesoConnect</h2><p>A tutorial site for the pathway-resolved human mesolimbic connectivity atlas.</p></div>
+        <div class="footer-group"><h3>Explore</h3><a href="/atlas/">Atlas files</a><a href="/tutorial/">Tutorial</a><a href="/methods/">Methods</a></div>
+        <div class="footer-group"><h3>Project</h3><a href="/resources/#citation">Citation</a><a href="/resources/#software">Software</a><a href="/resources/#organization">File organization</a></div>
+        <p class="footer-meta">MesoConnect Atlas · <span data-current-year>2026</span> · Atlas files and tutorial source are included in this repository.</p>
+      </div>
+    </footer>
+  </body>
+</html>

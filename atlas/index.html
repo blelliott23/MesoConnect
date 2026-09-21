@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#152b4f" />
+    <meta name="description" content="Understand the MesoConnect pathways, atlas map types, thresholds, naming, and spatial reference." />
+    <title>Atlas files | MesoConnect</title>
+    <link rel="icon" href="/assets/images/brand/mesoconnect-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <script src="/assets/js/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-brand" href="/" aria-label="MesoConnect home">
+          <img src="/assets/images/brand/mesoconnect-mark.svg" alt="" width="38" height="38" />
+          <span>MesoConnect <small>Atlas tutorial</small></span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle><span></span></button>
+        <nav class="site-nav" aria-label="Primary navigation" data-site-nav data-open="false">
+          <a href="/">Overview</a>
+          <a href="/atlas/" aria-current="page">Atlas files</a>
+          <a href="/tutorial/">Tutorial</a>
+          <a href="/methods/">Methods</a>
+          <a href="/resources/">Resources</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+      <header class="page-intro">
+        <div class="container">
+          <ol class="breadcrumb" aria-label="Breadcrumb"><li><a href="/">Home</a></li><li>Atlas files</li></ol>
+          <p class="eyebrow">Know what you are opening</p>
+          <h1>Atlas files and naming</h1>
+          <p class="kicker">
+            MesoConnect provides an overlap-proportion map and a thresholded 50% consensus map for each pathway and
+            hemisphere, using filenames that match the manuscript.
+          </p>
+          <div class="button-row">
+            <a class="button" href="/data/MesoConnect_Atlas/README.md">Open the atlas README</a>
+            <a class="button button--light" href="/data/MesoConnect_Atlas/mesoconnect_subject_counts.csv" download>Download subject counts</a>
+          </div>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="container content-with-aside">
+          <aside class="sticky-aside">
+            <nav class="jump-nav" aria-label="On this page">
+              <h2>On this page</h2>
+              <ul>
+                <li><a href="#space"><span class="jump-number">01</span><span>Spatial reference</span></a></li>
+                <li><a href="#map-types"><span class="jump-number">02</span><span>Map types</span></a></li>
+                <li><a href="#pathways"><span class="jump-number">03</span><span>Pathway names</span></a></li>
+                <li><a href="#thresholds"><span class="jump-number">04</span><span>Thresholds</span></a></li>
+                <li><a href="#interpolation"><span class="jump-number">05</span><span>Interpolation</span></a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <article class="prose">
+            <section id="space">
+              <p class="eyebrow">01 · Spatial reference</p>
+              <h2>FSL MNI152 1 mm space</h2>
+              <p class="lede">
+                The primary public atlas grid is expected to be 182 × 218 × 182 voxels at 1 mm isotropic resolution.
+              </p>
+              <p>
+                On this site, <strong>MNI space</strong> means the FSL MNI152 1 mm grid unless a section says
+                otherwise. <strong>Native space</strong> means the participant diffusion grid used for tractography.
+                In the HCP-style example, MNI atlas masks are transformed to an ACPC-aligned diffusion reference with
+                a standard-to-ACPC deformation field.
+              </p>
+              <div class="note">
+                <p>
+                  <strong>Moving image:</strong> the atlas map being transformed. <strong>Fixed or reference image:</strong>
+                  the target participant grid that defines output dimensions and voxel size.
+                </p>
+              </div>
+            </section>
+
+            <section id="map-types">
+              <p class="eyebrow">02 · Map types</p>
+              <h2>Choose the file by its meaning</h2>
+              <div class="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">File suffix</th><th scope="col">Meaning</th><th scope="col">Recommended use</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><code>*_overlap_prop.nii.gz</code></td>
+                      <td>Continuous probability map. Each voxel is the proportion of contributing participants whose binarized tract included that voxel, from 0 to 1.</td>
+                      <td>Visualization, threshold decisions, and probability-weighted extraction.</td>
+                    </tr>
+                    <tr>
+                      <td><code>*_thr50.nii.gz</code></td>
+                      <td>Binary 50% threshold map. A voxel is 1 when the tract was present in at least half of contributing participants.</td>
+                      <td>Conservative primary atlas for corridor construction and atlas-guided tractography.</td>
+                    </tr>
+                    <tr>
+                      <td><code>mesoconnect_subject_counts.csv</code></td>
+                      <td>One row per tract with its contributing-subject count.</td>
+                      <td>Documentation, legends, and denominator checks.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </section>
+
+            <section id="pathways">
+              <p class="eyebrow">03 · Pathway names</p>
+              <h2>The seven core pathway families</h2>
+              <p>
+                Each pathway folder contains left and right overlap-proportion and 50% consensus maps. Folder and file
+                stems use lowercase snake case; display names use publication-style anatomy labels.
+              </p>
+              <div class="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">Display name</th><th scope="col">Current file stem examples</th><th scope="col">Circuit grouping</th></tr></thead>
+                  <tbody>
+                    <tr><td>Inferior VTA–NAc</td><td><code>left_inferior_vta_nac_mni152_1mm</code><br /><code>right_inferior_vta_nac_mni152_1mm</code></td><td>Motivated salience and learning</td></tr>
+                    <tr><td>Superior VTA–NAc</td><td><code>left_superior_vta_nac_mni152_1mm</code><br /><code>right_superior_vta_nac_mni152_1mm</code></td><td>Motivated salience and learning</td></tr>
+                    <tr><td>VTA–Amygdala</td><td><code>left_vta_amygdala_mni152_1mm</code><br /><code>right_vta_amygdala_mni152_1mm</code></td><td>Motivated salience and learning</td></tr>
+                    <tr><td>VTA–Anterior HPC</td><td><code>left_vta_anterior_hpc_mni152_1mm</code><br /><code>right_vta_anterior_hpc_mni152_1mm</code></td><td>Motivated memory</td></tr>
+                    <tr><td>VTA–Posterior HPC</td><td><code>left_vta_posterior_hpc_mni152_1mm</code><br /><code>right_vta_posterior_hpc_mni152_1mm</code></td><td>Motivated memory</td></tr>
+                    <tr><td>HPC–NAc–VP</td><td><code>left_hpc_nac_vp_mni152_1mm</code><br /><code>right_hpc_nac_vp_mni152_1mm</code></td><td>Regulation of motivated behavior</td></tr>
+                    <tr><td>VP–VTA</td><td><code>left_vp_vta_mni152_1mm</code><br /><code>right_vp_vta_mni152_1mm</code></td><td>Regulation of motivated behavior</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="note">
+                <p>
+                  <strong>Downward-arc organization.</strong> HPC–NAc–VP uses the NAc as an intermediate waypoint;
+                  VP–VTA is reconstructed separately.
+                </p>
+              </div>
+              <figure class="figure-placeholder">
+                <img src="/assets/images/manuscript/figure-3-vta-nac-endpoint-topography.png" alt="Endpoint-density maps and midline-distance histograms comparing inferior and superior VTA–NAc pathways at the NAc and VTA." width="2046" height="1211" />
+                <figcaption>
+                  <strong>Figure 3. Endpoint topography of the inferior and superior VTA–NAc tracts.</strong>
+                  Endpoint-density maps and histograms show separation at both the NAc and VTA ends of the reconstruction.
+                </figcaption>
+              </figure>
+            </section>
+
+            <section id="thresholds">
+              <p class="eyebrow">04 · Thresholds</p>
+              <h2>Use overlap thresholds intentionally</h2>
+              <div class="grid-3">
+                <article class="card">
+                  <span class="tag tag--teal">Sensitive</span>
+                  <h3>25%</h3>
+                  <p>Increases participant coverage, but also permits greater spatial overreach.</p>
+                </article>
+                <article class="card">
+                  <span class="tag tag--orange">Primary</span>
+                  <h3>50%</h3>
+                  <p>The conservative primary atlas used by the worked corridor example.</p>
+                </article>
+                <article class="card">
+                  <span class="tag tag--rose">Strict</span>
+                  <h3>75%</h3>
+                  <p>Reduces overreach but may omit legitimate interparticipant variation.</p>
+                </article>
+              </div>
+              <p>
+                The supplied example applies one explicit 2 mm spherical maximum dilation to the binary 50% atlas
+                before corridor construction. Dilation can absorb registration uncertainty, but it also reduces
+                spatial specificity. Record the selected threshold, kernel shape, and radius in every analysis manifest.
+              </p>
+            </section>
+
+            <section id="interpolation">
+              <p class="eyebrow">05 · Interpolation</p>
+              <h2>Match interpolation to data type</h2>
+              <ul class="checklist">
+                <li><strong>Probability maps:</strong> use linear interpolation, then apply the intended threshold in native space.</li>
+                <li><strong>Binary masks and labels:</strong> use nearest-neighbor interpolation to preserve discrete values.</li>
+                <li><strong>Every output:</strong> inspect orientation, grid, and anatomy before extracting values or tracking.</li>
+              </ul>
+              <div class="button-row">
+                <a class="button" href="/tutorial/">Continue to the worked tutorial →</a>
+                <a class="button button--light" href="/resources/#organization">See recommended folders</a>
+              </div>
+            </section>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand"><h2>MesoConnect</h2><p>A tutorial site for the pathway-resolved human mesolimbic connectivity atlas.</p></div>
+        <div class="footer-group"><h3>Explore</h3><a href="/atlas/">Atlas files</a><a href="/tutorial/">Tutorial</a><a href="/methods/">Methods</a></div>
+        <div class="footer-group"><h3>Project</h3><a href="/resources/#citation">Citation</a><a href="/resources/#software">Software</a><a href="/resources/#organization">File organization</a></div>
+        <p class="footer-meta">MesoConnect Atlas · <span data-current-year>2026</span> · Atlas files and tutorial source are included in this repository.</p>
+      </div>
+    </footer>
+  </body>
+</html>
