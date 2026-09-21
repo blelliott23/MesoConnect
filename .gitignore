@@ -11,4 +11,4 @@ node_modules/
 
 # Optional generated reports
 site-check-report.json
-
+# Vercel project-link metadata stays in the ignored .vercel directory above.
