@@ -2,6 +2,21 @@
 
 MesoConnect is a human 7T diffusion tractography atlas of seven bilateral mesolimbic pathways. This repository contains the public atlas package, a static tutorial website, an annotated Inferior VTA–NAc application script, selected manuscript figures, and the FSL MNI152 1 mm brain reference used with the atlas.
 
+**[Open the tutorial website](https://mesoconnect.vercel.app)** · **[Download the complete atlas](https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip)** · **[Browse the atlas files](data/MesoConnect_Atlas)** · **[Open the worked script](examples/mesoconnect_inferior_vta_nac_template.sh)**
+
+## Start here
+
+| I want to… | Go to |
+| --- | --- |
+| Learn what the atlas contains | [Live atlas overview](https://mesoconnect.vercel.app) |
+| Download everything in one file | [MesoConnect_Atlas.zip](https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip) |
+| Browse individual NIfTI maps | [`data/MesoConnect_Atlas/`](data/MesoConnect_Atlas) |
+| Follow the application workflow | [Worked tutorial](https://mesoconnect.vercel.app/tutorial/) |
+| Run an annotated example | [`examples/mesoconnect_inferior_vta_nac_template.sh`](examples/mesoconnect_inferior_vta_nac_template.sh) |
+| Edit the website | [`docs/EDITING_GUIDE.md`](docs/EDITING_GUIDE.md) |
+
+The similarly named paths serve different purposes: `atlas-files/` is the source for the website's **Atlas files** explanatory page; `data/MesoConnect_Atlas/` contains the actual downloadable atlas data. There is no second atlas-data folder.
+
 ## Download the atlas
 
 - [Download the complete MesoConnect Atlas ZIP](https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip)
