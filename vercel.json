@@ -3,8 +3,10 @@
   "cleanUrls": true,
   "trailingSlash": true,
   "redirects": [
-    { "source": "/atlas", "destination": "/atlas-files/", "permanent": true },
-    { "source": "/atlas/", "destination": "/atlas-files/", "permanent": true }
+    { "source": "/atlas", "destination": "/atlas-guide/", "permanent": true },
+    { "source": "/atlas/", "destination": "/atlas-guide/", "permanent": true },
+    { "source": "/atlas-files", "destination": "/atlas-guide/", "permanent": true },
+    { "source": "/atlas-files/", "destination": "/atlas-guide/", "permanent": true }
   ],
   "headers": [
     {

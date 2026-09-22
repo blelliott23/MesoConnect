@@ -15,20 +15,20 @@ MesoConnect is a human 7T diffusion tractography atlas of seven bilateral mesoli
 | Run an annotated example | [`examples/mesoconnect_inferior_vta_nac_template.sh`](examples/mesoconnect_inferior_vta_nac_template.sh) |
 | Edit the website | [`docs/EDITING_GUIDE.md`](docs/EDITING_GUIDE.md) |
 
-The similarly named paths serve different purposes: `atlas-files/` is the source for the website's **Atlas files** explanatory page; `data/MesoConnect_Atlas/` contains the actual downloadable atlas data. There is no second atlas-data folder.
+The atlas data has one clear home: `data/MesoConnect_Atlas/`. The separate `atlas-guide/` directory contains only the source for the website's explanatory **Atlas guide** page; it does not contain atlas data.
 
 ## Download the atlas
 
 - [Download the complete MesoConnect Atlas ZIP](https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip)
 - [Browse the atlas package on GitHub](data/MesoConnect_Atlas)
-- [Review atlas filenames and map types](https://mesoconnect.vercel.app/atlas-files/)
+- [Review atlas filenames and map types](https://mesoconnect.vercel.app/atlas-guide/)
 
 The ZIP contains all 28 atlas maps, `mesoconnect_subject_counts.csv`, the FSL MNI152 1 mm brain reference, and the package documentation and licensing notices. Its SHA-256 checksum is stored in `downloads/MesoConnect_Atlas.zip.sha256`.
 
 ## What is included
 
 - A responsive overview of the seven pathways and three proposed functional groupings.
-- An atlas-files guide covering MNI space, `overlap_prop` and `thr50` maps, filenames, thresholds, and interpolation.
+- An atlas guide covering MNI space, `overlap_prop` and `thr50` maps, filenames, thresholds, and interpolation.
 - The complete atlas package under `data/MesoConnect_Atlas`, including 28 NIfTI maps and hemisphere-specific subject counts.
 - An eight-step Inferior VTA–NAc corridor tutorial with copyable commands.
 - A well-annotated single-participant shell template with dry-run checks and overwrite protection.
@@ -59,7 +59,7 @@ The checker validates local links and assets, duplicate HTML IDs, image alternat
 ```text
 .
 ├── index.html                         # Landing page and atlas overview
-├── atlas-files/index.html             # Map types, names, thresholds, downloads
+├── atlas-guide/index.html             # Explanatory website page; no atlas data
 ├── tutorial/index.html                # Eight-step application tutorial
 ├── methods/index.html                 # Atlas methods and parameter distinctions
 ├── resources/index.html               # Software, QA, troubleshooting, citation
