@@ -1023,6 +1023,11 @@ pre code {
   text-decoration: none;
 }
 
+/* Tutorial/reference cards without a leading numbered icon. */
+.resource-link--plain {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
 .resource-link:hover {
   color: var(--ink-900);
   border-color: #93aaa7;
