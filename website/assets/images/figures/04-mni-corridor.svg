@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">MNI inclusion corridor workflow diagram</title>
+  <desc id="desc">Diagram showing dilated left and right atlas tracts combined with endpoint regions.</desc>
+  <rect width="1600" height="900" fill="#eef2f3"/>
+  <rect x="48" y="48" width="1504" height="804" rx="32" fill="#fbfaf7" stroke="#9aabba" stroke-width="4" stroke-dasharray="16 14"/>
+  <text x="100" y="125" fill="#d9651a" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="5">WORKFLOW DIAGRAM 04</text>
+  <text x="100" y="205" fill="#14233b" font-family="Helvetica, Arial, sans-serif" font-size="58">Build the MNI-space inclusion corridor</text>
+  <text x="100" y="256" fill="#586c84" font-family="Arial, sans-serif" font-size="25">Recommended: before-and-after slice overlays from FSLeyes</text>
+  <g transform="translate(120 340)" font-family="Arial, sans-serif">
+    <g fill="#fff" stroke="#dce3e9" stroke-width="3"><rect width="560" height="340" rx="24"/><rect x="800" width="560" height="340" rx="24"/></g>
+    <text x="32" y="54" fill="#14233b" font-size="26" font-weight="700">Inputs</text><text x="832" y="54" fill="#14233b" font-size="26" font-weight="700">Binarized union</text>
+    <g transform="translate(102 82)"><ellipse cx="175" cy="125" rx="165" ry="112" fill="#edf1f4" stroke="#bdc8d4" stroke-width="4"/><path d="M97 154c33-85 89-98 151-35" fill="none" stroke="#d9651a" stroke-width="22"/><path d="M235 150c34-66 72-76 106-44" fill="none" stroke="#d9651a" stroke-width="22"/><g fill="#147d75"><circle cx="90" cy="164" r="24"/><circle cx="247" cy="120" r="24"/><circle cx="232" cy="155" r="24"/><circle cx="344" cy="106" r="24"/></g></g>
+    <text x="666" y="196" fill="#586c84" font-size="55">→</text>
+    <g transform="translate(902 82)"><ellipse cx="175" cy="125" rx="165" ry="112" fill="#edf1f4" stroke="#bdc8d4" stroke-width="4"/><path d="M80 160c40-105 116-117 175-39" fill="none" stroke="#f59e0b" stroke-width="50" opacity=".5"/><path d="M225 158c42-86 90-92 130-52" fill="none" stroke="#f59e0b" stroke-width="50" opacity=".5"/><path d="M85 157c38-91 105-100 163-37" fill="none" stroke="#d9651a" stroke-width="22"/><path d="M232 153c35-69 76-79 114-47" fill="none" stroke="#d9651a" stroke-width="22"/></g>
+  </g>
+  <text x="100" y="805" fill="#75879a" font-family="Arial, sans-serif" font-size="20">Replacement filename: 04-mni-corridor.svg</text>
+</svg>

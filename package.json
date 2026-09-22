@@ -1,15 +1,15 @@
 {
-  "name": "mesoconnect-atlas-tutorial",
+  "name": "mesoconnect-website",
   "version": "0.1.0",
   "private": true,
-  "description": "Static tutorial website for the MesoConnect mesolimbic connectivity atlas.",
+  "description": "Static website for the MesoConnect mesolimbic connectivity atlas.",
   "scripts": {
-    "dev": "python3 -m http.server 4173",
-    "preview": "python3 -m http.server 4173",
-    "check": "node scripts/check-site.mjs"
+    "build": "node website/scripts/build-site.mjs",
+    "dev": "npm run build && python3 -m http.server 4173 --directory dist",
+    "preview": "npm run build && python3 -m http.server 4173 --directory dist",
+    "check": "npm run build && node website/scripts/check-site.mjs"
   },
   "engines": {
     "node": ">=18"
   }
 }
-

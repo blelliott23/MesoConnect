@@ -1,0 +1,7 @@
+numpy
+pandas
+nibabel
+matplotlib
+dipy
+pyAFQ
+dmri-amico

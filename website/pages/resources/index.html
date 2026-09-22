@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#152b4f" />
+    <meta name="description" content="Software, ROI sources, output organization, troubleshooting, and citation guidance for MesoConnect." />
+    <title>Resources | MesoConnect</title>
+    <link rel="icon" href="/assets/images/brand/mesoconnect-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <script src="/assets/js/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-brand" href="/" aria-label="MesoConnect home">
+          <img src="/assets/images/brand/mesoconnect-mark.svg" alt="" width="38" height="38" />
+          <span>MesoConnect <small>Atlas tutorial</small></span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle><span></span></button>
+        <nav class="site-nav" aria-label="Primary navigation" data-site-nav data-open="false">
+          <a href="/">Overview</a>
+          <a href="/atlas-documentation/">Atlas documentation</a>
+          <a href="/tutorial/">Tutorial</a>
+          <a href="/microstructure/">Microstructure</a>
+          <a href="/methods/">Methods</a>
+          <a href="/resources/" aria-current="page">Resources</a>
+          <a href="https://github.com/blelliott23/MesoConnect">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+      <header class="page-intro">
+        <div class="container">
+          <ol class="breadcrumb" aria-label="Breadcrumb"><li><a href="/">Home</a></li><li>Resources</li></ol>
+          <p class="eyebrow">Plan, inspect, and report</p>
+          <h1>Resources and quality control</h1>
+          <p class="kicker">
+            Use this page to assemble the software and anatomical inputs, organize derived files, diagnose common
+            failures, and record enough provenance to reproduce the analysis.
+          </p>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="container content-with-aside">
+          <aside class="sticky-aside">
+            <nav class="jump-nav" aria-label="On this page">
+              <h2>On this page</h2>
+              <ul>
+                <li><a href="#software"><span class="jump-number">01</span><span>Software</span></a></li>
+                <li><a href="#roi-resources"><span class="jump-number">02</span><span>ROI resources</span></a></li>
+                <li><a href="#organization"><span class="jump-number">03</span><span>Output folders</span></a></li>
+                <li><a href="#troubleshooting"><span class="jump-number">04</span><span>Troubleshooting</span></a></li>
+                <li><a href="#qa-checklist"><span class="jump-number">05</span><span>QA checklist</span></a></li>
+                <li><a href="#citation"><span class="jump-number">06</span><span>Citation</span></a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <article class="prose">
+            <section id="software">
+              <p class="eyebrow">01 · Software</p>
+              <h2>Use only the tools your workflow requires</h2>
+              <div class="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">Software</th><th scope="col">Role in the workflow</th><th scope="col">Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>MRtrix3</td><td>FOD-based tractography with <code>tckgen</code>, tract maps, statistics, and streamline QC utilities.</td><td>Used by the worked example</td></tr>
+                    <tr><td>DSI Studio</td><td>Alternative tractography and connectometry environment; translate the atlas constraints to its ROI and region-action model.</td><td>Optional alternative</td></tr>
+                    <tr><td>FSL</td><td><code>fslmaths</code>, transforms, MNI templates, mask operations, scalar extraction, and optional FSL tractography tools.</td><td>Required for supplied mask commands</td></tr>
+                    <tr><td>ANTs</td><td>Alternative registration framework; used for MNI-to-native region registration in the manuscript workflow.</td><td>Optional alternative</td></tr>
+                    <tr><td>FreeSurfer</td><td>Participant-native anatomical derivatives and masks when required by a project.</td><td>Project dependent</td></tr>
+                    <tr><td>DIPY and pyAFQ</td><td>Streamline clustering, orientation, resampling, bundle cleaning, and nodewise tract profiles.</td><td>Used by optional study scripts</td></tr>
+                    <tr><td>AMICO</td><td>NODDI model fitting, RMSE calculation, and tissue-fraction-modulated NDI/ODI maps.</td><td>Used by the optional NODDI script</td></tr>
+                    <tr><td>Python stack</td><td>nibabel, NumPy, pandas, and matplotlib for inspection, tabulation, plots, and downstream analysis.</td><td>Used by optional study scripts</td></tr>
+                    <tr><td>FSLeyes, MRIcroGL, or ITK-SNAP</td><td>Visual inspection of masks, ROIs, native-space alignment, and streamline geometry.</td><td>At least one viewer required</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="note">
+                <p>
+                  <strong>Choose the pipeline that fits your study.</strong> MesoConnect NIfTI maps can serve as
+                  anatomical templates in MRtrix3, DSI Studio, FSL, DIPY, pyAFQ, or another validated environment.
+                  Software packages do not share identical tracking algorithms or ROI semantics, so translate and
+                  validate the anatomical logic instead of assuming settings are interchangeable.
+                </p>
+              </div>
+            </section>
+
+            <section id="roi-resources">
+              <p class="eyebrow">02 · ROI resources</p>
+              <h2>Endpoint, waypoint, and exclusion anatomy</h2>
+              <p>
+                The manuscript used Harvard–Oxford masks for the hippocampus, amygdala, and nucleus accumbens; the
+                Trutti 7T probabilistic atlas for the VTA; and the Pauli/CIT168 atlas for the ventral pallidum. These
+                third-party ROIs are not redistributed here. Download them from the original providers and retain
+                source, version, threshold, transform, and license information.
+              </p>
+              <div class="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">ROI family</th><th scope="col">Manuscript source and download</th><th scope="col">Use</th></tr></thead>
+                  <tbody>
+                    <tr><td>VTA</td><td>Trutti 7T probabilistic VTA atlas, thresholded at 25% · <a href="https://github.com/ACTrutti/VTA-atlas">GitHub</a> · <a href="https://osf.io/9pzj3/">OSF</a></td><td>Seed for VTA-centered pathways; endpoint for VP–VTA.</td></tr>
+                    <tr><td>Hippocampus</td><td>Harvard–Oxford subcortical atlas · <a href="https://fsl.fmrib.ox.ac.uk/fsl/docs/other/datasets.html">FSL atlas documentation and access</a></td><td>VTA–HPC targets and HPC–NAc–VP seed.</td></tr>
+                    <tr><td>Amygdala</td><td>Harvard–Oxford subcortical atlas · <a href="https://fsl.fmrib.ox.ac.uk/fsl/docs/other/datasets.html">FSL atlas documentation and access</a></td><td>Target for VTA–Amygdala.</td></tr>
+                    <tr><td>Nucleus accumbens</td><td>Harvard–Oxford subcortical atlas · <a href="https://fsl.fmrib.ox.ac.uk/fsl/docs/other/datasets.html">FSL atlas documentation and access</a></td><td>VTA–NAc target and HPC–NAc–VP waypoint.</td></tr>
+                    <tr><td>Ventral pallidum</td><td>Pauli/CIT168 subcortical atlas · <a href="https://github.com/jmtyszka/CIT168-SubCorticalAtlas">GitHub</a> · <a href="https://doi.org/10.17605/OSF.IO/JKZWP">OSF</a></td><td>HPC–NAc–VP target and VP–VTA seed.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="button-row">
+                <a class="button" href="https://github.com/blelliott23/MesoConnect/blob/main/ROI_RESOURCES.md">Open the complete ROI download guide</a>
+                <a class="button button--light" href="https://fsl.fmrib.ox.ac.uk/fsl/docs/install/index.html">Install FSL and Harvard–Oxford</a>
+              </div>
+              <p>
+                The <a href="https://neurovault.org/collections/2485/">Murty et al. SN/VTA collection</a> is listed in
+                the download guide as a related comparison resource, not as the primary VTA ROI used by this manuscript.
+              </p>
+              <p>
+                Common exclusion resources include thalamus, cortical gray matter, cerebellum, inferior brainstem,
+                lateral hypothalamus, mammillary bodies, red nucleus, pathway-specific fornix masks, and contralateral
+                hemisphere masks.
+              </p>
+            </section>
+
+            <section id="organization">
+              <p class="eyebrow">03 · Output folders</p>
+              <h2>Keep sources, transforms, masks, outputs, and QA separate</h2>
+              <p>
+                The structure below mirrors the worked example while making it clear which products live in MNI space
+                and which are participant-specific.
+              </p>
+              <div class="file-tree" role="figure" aria-label="Recommended output folder tree">project/
+└── derivatives/
+    └── mesoconnect/
+        └── sub-1006/
+            ├── xfm/
+            │   └── standard2acpc_dc.nii.gz
+            ├── atlas_mni/
+            │   ├── left_inferior_vta_nac_mni152_1mm_thr50.nii.gz
+            │   ├── right_inferior_vta_nac_mni152_1mm_thr50.nii.gz
+            │   ├── left_inferior_vta_nac_mni152_1mm_thr50_dil2mm.nii.gz
+            │   ├── right_inferior_vta_nac_mni152_1mm_thr50_dil2mm.nii.gz
+            │   └── inferior_vta_accumbens_inclusion_corridor.nii.gz
+            ├── roi_native/
+            │   ├── left_vta.nii.gz
+            │   ├── right_vta.nii.gz
+            │   ├── left_accumbens.nii.gz
+            │   ├── right_accumbens.nii.gz
+            │   ├── inferior_vta_accumbens_inclusion_corridor.nii.gz
+            │   ├── inferior_vta_accumbens_exclusion_corridor.nii.gz
+            │   ├── T1_MNI_Lhemi_bin.nii.gz
+            │   └── T1_MNI_Rhemi_bin.nii.gz
+            ├── tractography/
+            │   ├── left_inferior_vta_nac.tck
+            │   └── right_inferior_vta_nac.tck
+            ├── qa/
+            │   ├── sub-1006_corridor_overlay.png
+            │   └── sub-1006_inferior_vta_nac_streamline_qc.png
+            ├── commands/
+            │   └── sub-1006_tractography_command.txt
+            └── manifest.tsv</div>
+              <p>
+                The manifest should include atlas version, threshold, dilation kernel and radius, transform and interpolation,
+                every seed, target, waypoint, and exclusion mask, FOD and gradient inputs, streamline and attempt
+                targets, cutoff, stop rule, software versions, and deviations from the reference workflow.
+              </p>
+            </section>
+
+            <section id="troubleshooting">
+              <p class="eyebrow">04 · Troubleshooting</p>
+              <h2>Common failures and first checks</h2>
+              <div class="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">Problem</th><th scope="col">Likely cause</th><th scope="col">First checks</th></tr></thead>
+                  <tbody>
+                    <tr><td>Warped atlas is shifted</td><td>Poor registration, coverage mismatch, or wrong transform direction.</td><td>Overlay T1 and MNI images; verify skull stripping, brain coverage, warp direction, and reference grid.</td></tr>
+                    <tr><td>Left/right appears flipped</td><td>Header orientation issue or mislabeled hemisphere.</td><td>Inspect <code>fslhd</code>/<code>fslorient</code> output and overlay known asymmetric anatomy.</td></tr>
+                    <tr><td>Mask vanishes after warping</td><td>Wrong transform, output grid, or interpolation.</td><td>Confirm MNI-to-native direction, nonempty input, native reference, and <code>--interp=nn</code>.</td></tr>
+                    <tr><td>Mask enters ventricles or gray matter</td><td>Registration error or excessive dilation.</td><td>Inspect the undilated and dilated atlas; correct alignment before reducing anatomical constraints.</td></tr>
+                    <tr><td>Corridor tracking fails</td><td>Corridor does not connect seed and target or exclusion is too restrictive.</td><td>Overlay every mask together; inspect the inverse and hemisphere-mask orientation.</td></tr>
+                    <tr><td>Few or zero streamlines</td><td>Incompatible masks, geometry, cutoff, or tracking parameters.</td><td>Confirm reachability within the corridor and compare the full command with pathway-specific settings.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <figure class="figure-placeholder">
+                <img src="/assets/images/figures/08-qa-comparison.svg" alt="Diagram comparing an acceptable native-space overlay with a left-right flip and a shifted or vanished mask." width="1600" height="900" />
+                <figcaption>
+                  <strong>Recommended figure location:</strong> add a compact good-versus-failed comparison. Keep the
+                  anatomy, slice position, and display range matched so the failure mode is visually obvious.
+                </figcaption>
+              </figure>
+            </section>
+
+            <section id="qa-checklist">
+              <p class="eyebrow">05 · QA checklist</p>
+              <h2>Minimum evidence to retain</h2>
+              <ul class="checklist">
+                <li>Atlas release version, pathway, hemisphere, and participant-overlap threshold.</li>
+                <li>Undilated and dilated MNI-space atlas overlays.</li>
+                <li>Native-space corridor and endpoint-region overlays.</li>
+                <li>Evidence that the transformed corridor remains connected to seed and target.</li>
+                <li>At least one corridor overlay and one streamline QC image per participant.</li>
+                <li>Accepted streamline count and whether the maximum seeding attempts were reached.</li>
+                <li>Exact command, software versions, and all deviations from the reference workflow.</li>
+                <li>Reconstruction success and missingness by pathway, hemisphere, and participant for group analyses.</li>
+              </ul>
+            </section>
+
+            <section id="citation">
+              <p class="eyebrow">06 · Citation</p>
+              <h2>Cite the manuscript and the atlas release</h2>
+              <p>
+                Cite the final MesoConnect manuscript and the exact versioned atlas release used in your analysis.
+                The manuscript title in the supplied draft is:
+              </p>
+              <div class="note">
+                <p>
+                  <strong>Mapping Mesolimbic Dopamine Projections to Subcortical Circuits Underlying Adaptive Behavior:
+                  A Human 7T Diffusion Tractography Atlas</strong>
+                </p>
+                <p>Blake L. Elliott, Ranesh Mopuru, Linda J. Hoffman, Josiah K. Leong, Nora D. Volkow, Ingrid R. Olson, and Vishnu P. Murty.</p>
+              </div>
+              <p>
+                Add the final journal citation, DOI, repository URL, archived release identifier, and atlas version
+                after they are confirmed. The repository uses scoped terms: HCP data-use terms for derived atlas data,
+                CC BY 4.0 for original documentation and figures, and MIT for original code. See the
+                <a href="/LICENSE">license notice</a>.
+              </p>
+              <div class="button-row">
+                <a class="button" href="/examples/mesoconnect_inferior_vta_nac_template.sh" download>Download annotated example</a>
+                <a class="button button--light" href="/atlas-documentation/">View atlas documentation</a>
+              </div>
+            </section>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand"><h2>MesoConnect</h2><p>A tutorial site for the pathway-resolved human mesolimbic connectivity atlas.</p></div>
+        <div class="footer-group"><h3>Explore</h3><a href="/atlas-documentation/">Atlas documentation</a><a href="/tutorial/">Tutorial</a><a href="/microstructure/">Microstructure</a><a href="/methods/">Methods</a></div>
+        <div class="footer-group"><h3>Project</h3><a href="/downloads/MesoConnect_Atlas.zip" download>Download complete atlas</a><a href="/downloads/MesoConnect_Analysis_Code.zip" download>Download analysis code</a><a href="https://github.com/blelliott23/MesoConnect">GitHub repository</a><a href="/resources/#citation">Citation</a><a href="/resources/#software">Software</a><a href="/resources/#organization">File organization</a></div>
+        <p class="footer-meta">MesoConnect Atlas · <span data-current-year>2026</span> · Website created using OpenAI Codex.</p>
+      </div>
+    </footer>
+  </body>
+</html>

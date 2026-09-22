@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#152b4f" />
+    <meta name="description" content="Optional MesoConnect workflows for tract cleaning, whole-tract microstructure, AMICO-NODDI, and nodewise sampling." />
+    <title>Microstructure | MesoConnect</title>
+    <link rel="icon" href="/assets/images/brand/mesoconnect-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <script src="/assets/js/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-brand" href="/" aria-label="MesoConnect home">
+          <img src="/assets/images/brand/mesoconnect-mark.svg" alt="" width="38" height="38" />
+          <span>MesoConnect <small>Atlas tutorial</small></span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle><span></span></button>
+        <nav class="site-nav" aria-label="Primary navigation" data-site-nav data-open="false">
+          <a href="/">Overview</a>
+          <a href="/atlas-documentation/">Atlas documentation</a>
+          <a href="/tutorial/">Tutorial</a>
+          <a href="/microstructure/" aria-current="page">Microstructure</a>
+          <a href="/methods/">Methods</a>
+          <a href="/resources/">Resources</a>
+          <a href="https://github.com/blelliott23/MesoConnect">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+      <header class="page-intro">
+        <div class="container">
+          <ol class="breadcrumb" aria-label="Breadcrumb"><li><a href="/">Home</a></li><li>Microstructure</li></ol>
+          <p class="eyebrow">Optional downstream analysis</p>
+          <h1>Clean tracts and extract microstructure</h1>
+          <p class="kicker">
+            Continue from a quality-controlled participant tractogram to a whole-tract scalar summary or a 100-node
+            NODDI profile. The supplied study scripts are available for replication and extension.
+          </p>
+          <div class="button-row">
+            <a class="button" href="/downloads/MesoConnect_Analysis_Code.zip" download>Download analysis code (.zip)</a>
+            <a class="button button--light" href="https://github.com/blelliott23/MesoConnect/tree/main/analysis-code">Browse code on GitHub</a>
+            <a class="button button--light" href="/tutorial/">Start with tractography</a>
+          </div>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="container content-with-aside">
+          <aside class="sticky-aside">
+            <nav class="jump-nav" aria-label="On this page">
+              <h2>On this page</h2>
+              <ul>
+                <li><a href="#software-choice"><span class="jump-number">01</span><span>Choose software</span></a></li>
+                <li><a href="#clean"><span class="jump-number">02</span><span>Clean tracts</span></a></li>
+                <li><a href="#whole-tract"><span class="jump-number">03</span><span>Whole-tract mean</span></a></li>
+                <li><a href="#noddi"><span class="jump-number">04</span><span>Fit NODDI</span></a></li>
+                <li><a href="#nodewise"><span class="jump-number">05</span><span>Nodewise profiles</span></a></li>
+                <li><a href="#code-index"><span class="jump-number">06</span><span>Code index</span></a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          <article class="prose">
+            <section id="software-choice">
+              <p class="eyebrow">01 · Choose software</p>
+              <h2>The atlas does not require MRtrix3</h2>
+              <p class="lede">
+                Experienced users may treat MesoConnect as an anatomical template inside their own validated
+                tractography pipeline. The public MRtrix3 workflow is a worked example, not a software restriction.
+              </p>
+              <p>
+                The NIfTI atlas maps can be transformed, thresholded, and used as pathway priors or constraints with
+                MRtrix3, DSI Studio, FSL, DIPY, pyAFQ, or another platform that preserves the intended coordinate
+                space and anatomy. Translate the seed, target, waypoint, exclusion, laterality, and stopping logic into
+                the selected software rather than copying command-line flags literally.
+              </p>
+              <div class="warning">
+                <p>
+                  <strong>Validate every implementation.</strong> Software packages differ in tracking algorithms,
+                  interpolation, ROI semantics, streamline termination, coordinate conventions, and defaults. Report
+                  the package, version, algorithm, atlas threshold, transforms, constraints, parameters, and QC rules.
+                </p>
+              </div>
+            </section>
+
+            <section id="clean">
+              <p class="eyebrow">02 · Clean tracts</p>
+              <h2>Optional pyAFQ streamline cleaning</h2>
+              <p>
+                The supplied script loads each tractogram against the participant diffusion reference and calls
+                pyAFQ's <code>clean_bundle</code> with 100 resampling points, five cleaning rounds, a distance threshold
+                of 3, a length threshold of 2, and mean-based statistics. These are the study settings, not universal
+                defaults; inspect retained and removed streamlines before accepting them.
+              </p>
+              <pre data-copy><code>python analysis-code/tracking_and_atlas/pyafq_tract_cleaning.py</code></pre>
+              <ul class="checklist">
+                <li>Edit <code>data_root</code>, <code>tract_root</code>, the tract list, and subject list.</li>
+                <li>Confirm that the reference image matches the tractogram coordinate system.</li>
+                <li>Save counts before and after cleaning and visually inspect both sets.</li>
+                <li>Do not silently exclude failed or very small bundles from group analysis.</li>
+              </ul>
+            </section>
+
+            <section id="whole-tract">
+              <p class="eyebrow">03 · Whole-tract summary</p>
+              <h2>Binarize the tract and extract a scalar mean</h2>
+              <p>
+                Use this approach when the scientific question concerns one value per tract. First rasterize the
+                tractogram on the microstructure map's grid, then binarize that density image, mask the scalar map, and
+                calculate the mean. Registration and voxel-grid agreement must be checked before extraction.
+              </p>
+              <pre data-copy><code>tckmap &lt;TRACT.tck&gt; &lt;TRACT_DENSITY.nii.gz&gt; \
+  -template &lt;MICROSTRUCTURE_MAP.nii.gz&gt; -force
+
+fslmaths &lt;TRACT_DENSITY.nii.gz&gt; -bin &lt;TRACT_MASK.nii.gz&gt;
+
+fslmaths &lt;MICROSTRUCTURE_MAP.nii.gz&gt; \
+  -mas &lt;TRACT_MASK.nii.gz&gt; \
+  &lt;MASKED_MICROSTRUCTURE.nii.gz&gt;
+
+fslstats &lt;MICROSTRUCTURE_MAP.nii.gz&gt; \
+  -k &lt;TRACT_MASK.nii.gz&gt; -M</code></pre>
+              <p>
+                The downloadable
+                <a href="/analysis-code/microstructure/whole_tract_microstructure.sh"><code>whole_tract_microstructure.sh</code></a>
+                automates these commands and also records voxel count and tract-mask volume. <code>-M</code> excludes
+                zero-valued scalar voxels; use <code>-m</code> instead if zero is a valid value that belongs in the
+                denominator, and report that decision.
+              </p>
+            </section>
+
+            <section id="noddi">
+              <p class="eyebrow">04 · NODDI</p>
+              <h2>Fit AMICO-NODDI and save modulated maps</h2>
+              <p>
+                The supplied <a href="/analysis-code/noddi/NODDI.py"><code>NODDI.py</code></a> converts FSL gradients
+                to an AMICO scheme, fits the NODDI model, calculates fit RMSE, and enables
+                <code>doSaveModulatedMaps</code>. The downstream script expects modulated NDI and ODI plus FWF maps.
+                Edit the input roots, output root, subject list, thread count, and b0 threshold for the new dataset.
+              </p>
+              <pre data-copy><code>python analysis-code/noddi/NODDI.py</code></pre>
+              <div class="note">
+                <p>
+                  <strong>Why modulated maps?</strong> NDI and ODI describe the tissue compartment. Multiplying those
+                  metrics by tissue fraction supplies the numerator contribution for a tissue-weighted regional mean,
+                  reducing bias from voxels with little tissue. The final weighted mean requires division by the summed
+                  tissue fraction; a plain mean of a modulated map is not the same quantity.
+                </p>
+              </div>
+              <p>
+                Parker CS, Veale T, Bocchetta M, et al. “Not all voxels are created equal: Reducing estimation bias in
+                regional NODDI metrics using tissue-weighted means.” <em>NeuroImage</em>. 2021;245:118749.
+                <a href="https://doi.org/10.1016/j.neuroimage.2021.118749">doi:10.1016/j.neuroimage.2021.118749</a>.
+              </p>
+            </section>
+
+            <section id="nodewise">
+              <p class="eyebrow">05 · Nodewise sampling</p>
+              <h2>Preserve spatial variation along the pathway</h2>
+              <p>
+                Whole-tract averages can hide focal effects. The supplied
+                <a href="/analysis-code/noddi/nodewise_noddi.py"><code>nodewise_noddi.py</code></a> loads each tract,
+                orients streamlines to a QuickBundles centroid, samples 100 equidistant nodes with Gaussian streamline
+                weights, and writes NDI, ODI, and FWF values to tract-level CSV files plus participant QC plots.
+              </p>
+              <pre data-copy><code>python analysis-code/noddi/nodewise_noddi.py</code></pre>
+              <ul class="checklist">
+                <li>Run only after tract cleaning and NODDI fitting are complete.</li>
+                <li>Confirm endpoint orientation so node 0 and node 99 have consistent anatomical meaning.</li>
+                <li>Inspect profiles for spikes, missing regions, reversals, and implausible values.</li>
+                <li>Model repeated nodes and multiple-comparison control explicitly in inferential analyses.</li>
+              </ul>
+            </section>
+
+            <section id="code-index">
+              <p class="eyebrow">06 · Reproduce or extend</p>
+              <h2>All supplied study code is organized on GitHub</h2>
+              <p>
+                The repository includes tractography and ROI preparation, pyAFQ cleaning, QuickBundles clustering,
+                tract and endpoint maps, tract statistics, atlas construction, NODDI, nodewise sampling, endpoint
+                center-of-mass analyses, and FreeSurfer hippocampal-subfield workflows. Use these scripts when
+                replicating or extending analyses from the manuscript.
+              </p>
+              <div class="button-row">
+                <a class="button" href="/downloads/MesoConnect_Analysis_Code.zip" download>Download all analysis code</a>
+                <a class="button button--light" href="https://github.com/blelliott23/MesoConnect/tree/main/analysis-code">Read the code README</a>
+              </div>
+            </section>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand"><h2>MesoConnect</h2><p>A tutorial site for the pathway-resolved human mesolimbic connectivity atlas.</p></div>
+        <div class="footer-group"><h3>Explore</h3><a href="/atlas-documentation/">Atlas documentation</a><a href="/tutorial/">Tutorial</a><a href="/microstructure/">Microstructure</a><a href="/methods/">Methods</a></div>
+        <div class="footer-group"><h3>Project</h3><a href="/downloads/MesoConnect_Atlas.zip" download>Download complete atlas</a><a href="/downloads/MesoConnect_Analysis_Code.zip" download>Download analysis code</a><a href="https://github.com/blelliott23/MesoConnect">GitHub repository</a><a href="/resources/#citation">Citation</a></div>
+        <p class="footer-meta">MesoConnect Atlas · <span data-current-year>2026</span> · Website created using OpenAI Codex.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,12 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": true,
   "redirects": [
-    { "source": "/atlas", "destination": "/atlas-guide/", "permanent": true },
-    { "source": "/atlas/", "destination": "/atlas-guide/", "permanent": true },
-    { "source": "/atlas-files", "destination": "/atlas-guide/", "permanent": true },
-    { "source": "/atlas-files/", "destination": "/atlas-guide/", "permanent": true }
+    { "source": "/atlas", "destination": "/atlas-documentation/", "permanent": true },
+    { "source": "/atlas/", "destination": "/atlas-documentation/", "permanent": true },
+    { "source": "/atlas-files", "destination": "/atlas-documentation/", "permanent": true },
+    { "source": "/atlas-files/", "destination": "/atlas-documentation/", "permanent": true },
+    { "source": "/atlas-guide", "destination": "/atlas-documentation/", "permanent": true },
+    { "source": "/atlas-guide/", "destination": "/atlas-documentation/", "permanent": true }
   ],
   "headers": [
     {

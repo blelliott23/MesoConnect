@@ -8,6 +8,7 @@
 
 # Dependency folders (the current site has no runtime dependencies)
 node_modules/
+dist/
 
 # Optional generated reports
 site-check-report.json
