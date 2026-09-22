@@ -83,6 +83,43 @@
                   the target participant grid that defines output dimensions and voxel size.
                 </p>
               </div>
+              <figure class="figure-placeholder">
+                <img
+                  src="/assets/images/figures/09-registration-direction.svg"
+                  alt="Two-stage registration diagram showing a participant T1 registered to an MNI template, followed by an MNI atlas mask transformed back to the participant diffusion or T1 reference grid."
+                  width="1500"
+                  height="820"
+                />
+                <figcaption>
+                  <strong>Registration direction for atlas application.</strong> First estimate the participant-native
+                  T1-to-MNI transform. Then apply its inverse to the MNI atlas, using the participant diffusion or T1
+                  image as the fixed reference so the output has the intended native-space grid. For conversion between
+                  MNI variants, the source atlas is moving and the desired template is fixed.
+                </figcaption>
+              </figure>
+              <h3>Registration tutorials and references</h3>
+              <div class="grid-2">
+                <a class="resource-link" href="https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/Preprocessing/Registration_Normalization.html">
+                  <span class="resource-link-icon">01</span>
+                  <span><strong>Registration and normalization overview</strong><small>Andy’s Brain Book · concepts and workflow</small></span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-link" href="https://andysbrainbook.readthedocs.io/en/latest/ANTs/ANTs_Overview.html">
+                  <span class="resource-link-icon">02</span>
+                  <span><strong>ANTs overview</strong><small>Andy’s Brain Book · ANTs setup and commands</small></span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-link" href="https://web.mit.edu/fsl_v5.0.10/fsl/doc/wiki/FLIRT(2f)StepByStep.html">
+                  <span class="resource-link-icon">03</span>
+                  <span><strong>FSL FLIRT step-by-step</strong><small>Legacy FSL 5.0.10 registration guide</small></span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a class="resource-link" href="https://andysbrainbook.readthedocs.io/en/latest/">
+                  <span class="resource-link-icon">04</span>
+                  <span><strong>Explore Andy’s Brain Book</strong><small>Tutorials for major neuroimaging packages and pipelines</small></span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
             </section>
 
             <section id="map-types">

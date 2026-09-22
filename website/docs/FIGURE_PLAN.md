@@ -14,6 +14,7 @@ Manuscript Figures 1–3 are included because they directly explain atlas genera
 | Exclusion mask | `website/assets/images/figures/06-exclusion-mask.svg` | Tutorial Step 5 | Editable diagram; replace with corridor, inverse, and brain-masked exclusion views. |
 | Tractography QC | `website/assets/images/figures/07-tractography-qc.svg` | Tutorial Step 8 | Editable diagram; replace with paired left/right streamlines plus seed, target, and corridor. |
 | QA comparison | `website/assets/images/figures/08-qa-comparison.svg` | Resources troubleshooting | Editable diagram; replace with matched acceptable and failed registration examples. |
+| Registration direction | `website/assets/images/figures/09-registration-direction.svg` | Atlas documentation, spatial-reference section | Included; explains moving versus fixed images, forward transform estimation, and inverse atlas transformation. |
 
 ## Optional future figures
 
