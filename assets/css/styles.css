@@ -639,8 +639,12 @@ pre code {
 
 .figure-placeholder img {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  /*
+   * Manuscript figures do not share one aspect ratio. Let each image keep its
+   * intrinsic proportions so wide workflow diagrams are scaled, never cropped.
+   */
+  height: auto;
+  object-fit: contain;
   background: #eff3f5;
 }
 
