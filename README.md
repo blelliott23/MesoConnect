@@ -1,174 +1,115 @@
 # MesoConnect
 
-MesoConnect is a human 7T diffusion tractography atlas of seven bilateral mesolimbic pathways. This repository contains the public atlas package, a static tutorial website, an annotated Inferior VTA–NAc application script, selected manuscript figures, and the FSL MNI152 1 mm brain reference used with the atlas.
+MesoConnect is a human 7 T diffusion tractography atlas of seven bilateral mesolimbic pathways. This repository is the canonical home of the atlas maps, manuscript analysis code, downloadable archives, and example files. The companion Docusaurus website provides the complete application and tractometry tutorial.
 
-**[Open the tutorial website](https://mesoconnect.vercel.app)** · **[Download the complete atlas](https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip)** · **[Download the analysis code](https://mesoconnect.vercel.app/downloads/MesoConnect_Analysis_Code.zip)** · **[Browse the atlas files](data/MesoConnect_Atlas)**
+**[Open the MesoConnect tutorial](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/)** · **[Download the atlas](downloads/MesoConnect_Atlas.zip)** · **[Download the analysis code](downloads/MesoConnect_Analysis_Code.zip)** · **[Browse the atlas files](data/MesoConnect_Atlas)**
 
 ## Start here
 
 | I want to… | Go to |
 | --- | --- |
-| Learn what the atlas contains | [Live atlas overview](https://mesoconnect.vercel.app) |
-| Download everything in one file | [MesoConnect_Atlas.zip](https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip) |
+| Learn what MesoConnect contains | [Tutorial introduction](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/docs/) |
+| Download the complete atlas | [MesoConnect Atlas ZIP](downloads/MesoConnect_Atlas.zip) |
 | Browse individual NIfTI maps | [`data/MesoConnect_Atlas/`](data/MesoConnect_Atlas) |
-| Follow the application workflow | [Worked tutorial](https://mesoconnect.vercel.app/tutorial/) |
-| Extract whole-tract or nodewise microstructure | [Microstructure tutorial](https://mesoconnect.vercel.app/microstructure/) |
-| Run an annotated example | [`examples/mesoconnect_inferior_vta_nac_template.sh`](examples/mesoconnect_inferior_vta_nac_template.sh) |
+| Apply the atlas to participant data | [Nine-step workflow](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/docs/workflow/overview) |
+| Extract tract-level or nodewise microstructure | [Node-profile workflow](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/docs/workflow/node-profiles) |
+| Inspect nodewise results interactively | [Node-wise Tract Explorer](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/explorer/) |
+| Run the original annotated example | [`examples/mesoconnect_inferior_vta_nac_template.sh`](examples/mesoconnect_inferior_vta_nac_template.sh) |
 | Reproduce or extend manuscript analyses | [`analysis-code/`](analysis-code) |
-| Download the anatomical ROIs used by the manuscript | [`ROI_RESOURCES.md`](ROI_RESOURCES.md) |
-| Edit the website | [`website/docs/EDITING_GUIDE.md`](website/docs/EDITING_GUIDE.md) |
+| Locate the anatomical ROI sources | [`ROI_RESOURCES.md`](ROI_RESOURCES.md) |
 
 ## Repository map
 
-| Folder | What it contains |
+| Location | Contents |
 | --- | --- |
-| [`data/MesoConnect_Atlas/`](data/MesoConnect_Atlas) | **The actual atlas:** NIfTI maps, subject counts, MNI reference, and atlas documentation |
-| [`analysis-code/`](analysis-code) | Manuscript and downstream analysis scripts, including tractography, atlas construction, cleaning, NODDI, nodewise sampling, and endpoint analyses |
-| [`downloads/`](downloads) | Ready-to-download ZIP archives and SHA-256 checksums |
-| [`examples/`](examples) | Annotated, runnable atlas-application example |
-| [`website/`](website) | **Website source files only:** pages, styles, scripts, images, and maintainer documentation |
+| [`data/MesoConnect_Atlas/`](data/MesoConnect_Atlas) | Canonical atlas data: 28 NIfTI maps, subject counts, the MNI reference, documentation, and licensing notices |
+| [`analysis-code/`](analysis-code) | Manuscript and downstream analysis scripts for tractography, atlas construction, cleaning, NODDI, tractometry, and endpoint analyses |
+| [`downloads/`](downloads) | Ready-to-download atlas and analysis-code ZIP archives with SHA-256 checksums |
+| [`examples/`](examples) | Annotated atlas-application example |
+| [`website/`](website) | Snapshot of the Docusaurus tutorial source that replaced the former static website implementation |
+| [`ROI_RESOURCES.md`](ROI_RESOURCES.md) | Official sources, thresholds, and citations for the anatomical regions used in atlas construction |
 
-There is one atlas-data location: `data/MesoConnect_Atlas/`. The folder `website/pages/atlas-documentation/` is only the source for a webpage that explains the atlas files.
+There is one canonical atlas-data tree: `data/MesoConnect_Atlas/`. The atlas ZIP under `website/static/downloads/` is an identical mirror bundled with the tutorial website for convenient downloading.
 
 ## Download the atlas
 
-- [Download the complete MesoConnect Atlas ZIP](https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip)
-- [Browse the atlas package on GitHub](data/MesoConnect_Atlas)
-- [Review atlas filenames and map types](https://mesoconnect.vercel.app/atlas-documentation/)
-- [Download the third-party anatomical ROIs from their original providers](ROI_RESOURCES.md)
+- [Download `MesoConnect_Atlas.zip` from this repository](downloads/MesoConnect_Atlas.zip)
+- [Open the tutorial download page](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/docs/atlas/downloads)
+- [Browse the individual atlas files](data/MesoConnect_Atlas)
+- [Review the third-party anatomical ROI sources](ROI_RESOURCES.md)
 
-The ZIP contains all 28 atlas maps, `mesoconnect_subject_counts.csv`, the FSL MNI152 1 mm brain reference, and the package documentation and licensing notices. Its SHA-256 checksum is stored in `downloads/MesoConnect_Atlas.zip.sha256`.
+The package contains 28 atlas maps: seven pathways, two hemispheres, and two map types. It also contains `mesoconnect_subject_counts.csv`, the FSL MNI152 1 mm brain reference, package documentation, and licensing notices. Its checksum is stored in [`downloads/MesoConnect_Atlas.zip.sha256`](downloads/MesoConnect_Atlas.zip.sha256).
 
-## What is included
+## Atlas map types
 
-- A responsive overview of the seven pathways and three proposed functional groupings.
-- Atlas documentation covering MNI space, `overlap_prop` and `thr50` maps, filenames, thresholds, and interpolation.
-- The complete atlas package under `data/MesoConnect_Atlas`, including 28 NIfTI maps and hemisphere-specific subject counts.
-- An eight-step Inferior VTA–NAc corridor tutorial with copyable commands.
-- Three optional steps for pyAFQ cleaning, AMICO-NODDI, and whole-tract or nodewise microstructure extraction.
-- Study scripts for ROI preparation, tractography, cleaning, tract maps, atlas construction, NODDI, endpoint analyses, and hippocampal subfields.
-- A well-annotated single-participant shell template with dry-run checks and overwrite protection.
-- Manuscript Figures 1–3 in the sections where they explain the atlas most clearly.
-- Editable workflow diagrams marking recommended locations for future participant-specific corridor and quality-control screenshots.
-- Editing, figure-placement, source-handling, licensing, and provenance notes.
+Each pathway folder contains four files:
 
-## Preview locally
+- Left and right `*_overlap_prop.nii.gz` continuous participant-overlap proportion maps.
+- Left and right `*_thr50.nii.gz` binary 50% consensus maps.
 
-From the repository root:
+Subject denominators are reported in `data/MesoConnect_Atlas/mesoconnect_subject_counts.csv`. Other thresholds can be derived from an overlap-proportion map and should be saved outside the canonical atlas folders.
 
-```bash
-npm run dev
-```
+## Tutorial website
 
-Then open `http://localhost:4173`. The site uses plain HTML, CSS, and JavaScript. The command assembles a generated preview in `dist/`; edit the source under `website/`, not `dist/`.
+The live tutorial is maintained and deployed from the separate [DiffusionTensorImaging-Repos/MesoConnect-Tutorial](https://github.com/DiffusionTensorImaging-Repos/MesoConnect-Tutorial) repository:
 
-## Validate before publishing edits
+https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/
+
+The `website/` directory in this repository is an independent source snapshot. It replaces the former static website, which remains recoverable from this repository's Git history. Changes made to the snapshot do not automatically update the live GitHub Pages site; live-site changes should be made in the upstream tutorial repository and then synchronized here.
+
+### Preview the Docusaurus site locally
 
 ```bash
-npm run check
+cd website
+npm ci
+npm run start
 ```
 
-The checker validates local links and assets, duplicate HTML IDs, image alternative text, and all published shell and Python syntax.
+### Validate a production build
+
+```bash
+cd website
+npm ci
+npm run build
+```
 
 ## Repository structure
 
 ```text
 .
-├── data/MesoConnect_Atlas/
-│   ├── README.md                      # Atlas package documentation
-│   ├── LICENSE                        # Material-specific data and software terms
-│   ├── mesoconnect_subject_counts.csv
-│   ├── templates/                     # FSL MNI152 1 mm brain + provenance
-│   └── <seven pathway folders>/       # Left/right overlap_prop and thr50 maps
-├── downloads/
-│   ├── MesoConnect_Atlas.zip            # Complete downloadable atlas package
-│   ├── MesoConnect_Atlas.zip.sha256     # Atlas archive integrity checksum
-│   ├── MesoConnect_Analysis_Code.zip    # Complete downloadable analysis code
-│   └── MesoConnect_Analysis_Code.zip.sha256
-├── examples/
-│   └── mesoconnect_inferior_vta_nac_template.sh
-├── analysis-code/
-│   ├── README.md                       # Script inventory, dependencies, and cautions
-│   ├── tracking_and_atlas/             # Tracking, cleaning, maps, atlas construction
-│   ├── noddi/                          # AMICO-NODDI and nodewise profiles
-│   ├── microstructure/                 # Generic whole-tract scalar extraction
-│   ├── center_of_mass_analyses/        # Endpoint-coordinate analyses
-│   └── hpc_endpoints/                  # FreeSurfer hippocampal-subfield workflows
-├── ROI_RESOURCES.md                   # Official ROI downloads and citations
-├── website/                           # Website source only; no atlas data
-│   ├── README.md                      # Website-source map
-│   ├── index.html                     # Landing page source
-│   ├── pages/
-│   │   ├── atlas-documentation/       # Atlas-file explanation page
-│   │   ├── tutorial/                  # Worked application page
-│   │   ├── microstructure/            # Optional downstream workflows
-│   │   ├── methods/                   # Manuscript methods page
-│   │   └── resources/                 # ROI links, QA, and troubleshooting
-│   ├── assets/                        # Shared styles, scripts, and images
-│   ├── docs/                          # Website editing and figure notes
-│   └── scripts/                       # Site build and validation scripts
-├── package.json
-└── vercel.json
+├── data/MesoConnect_Atlas/          # Canonical atlas maps and documentation
+├── analysis-code/                   # Manuscript and downstream analysis code
+├── downloads/                       # Release ZIPs and checksums
+├── examples/                        # Annotated application example
+├── website/                         # Docusaurus tutorial source snapshot
+│   ├── docs/                        # Tutorial and reference pages
+│   ├── src/                         # Landing page and custom styling
+│   ├── static/                      # Images, scripts, explorer, and download mirror
+│   ├── tools/                       # Documentation build helpers
+│   ├── docusaurus.config.ts
+│   ├── sidebars.ts
+│   └── package.json
+├── ROI_RESOURCES.md                 # Third-party ROI sources and citations
+└── README.md
 ```
-
-## Editing the website
-
-### Text and navigation
-
-Each page is an ordinary `index.html` file. Search for the visible heading you want to change. The header and footer are repeated on every page so navigation works without JavaScript; update every HTML page when adding or renaming a navigation item.
-
-### Colors and typography
-
-Edit the design variables at the top of `website/assets/css/styles.css`. `--font-sans` begins with Helvetica Neue and Helvetica, with Arial and system sans-serif fallbacks. Code uses a separate monospace stack.
-
-### Figures
-
-Manuscript Figures 1–3 live in `website/assets/images/manuscript`. The remaining tutorial and QA figure slots use editable SVGs under `website/assets/images/figures`. When replacing a figure, update its image path, alternative text, dimensions, and caption together. See `website/docs/FIGURE_PLAN.md` for placement and screenshot guidance.
-
-### Tutorial commands
-
-Keep these files synchronized:
-
-- `website/pages/tutorial/index.html` for reader-facing commands.
-- `examples/mesoconnect_inferior_vta_nac_template.sh` for the runnable workflow.
-- `website/pages/microstructure/index.html` for optional downstream guidance.
-- `analysis-code/` for the downloadable study and extraction scripts.
-
-The dilation step uses an explicit 2 mm-radius spherical kernel:
-
-```bash
-fslmaths input_thr50.nii.gz -kernel sphere 2 -dilF -bin output_thr50_dil2mm.nii.gz
-```
-
-This is more explicit than repeating FSL's default `-dilM` operation. It is intentionally a 2 mm spherical maximum dilation and is not voxel-for-voxel identical to two default mean-dilation passes.
-
-## Atlas package
-
-Each of the seven pathway folders contains four maps:
-
-- Left and right `*_overlap_prop.nii.gz` continuous overlap-proportion maps.
-- Left and right `*_thr50.nii.gz` binary 50% consensus maps.
-
-Subject denominators are in `data/MesoConnect_Atlas/mesoconnect_subject_counts.csv`. See the atlas package README for the exact naming convention, dimensions, and quick-start commands.
 
 ## Analysis code
 
-The complete code package is available as [`downloads/MesoConnect_Analysis_Code.zip`](downloads/MesoConnect_Analysis_Code.zip) and as browsable source under [`analysis-code/`](analysis-code). The original project paths and HCP subject lists are retained where they document the study workflow, so users must edit configuration blocks before running the scripts elsewhere. The older atlas copy supplied alongside the scripts was not imported; the canonical atlas remains under `data/MesoConnect_Atlas/` with only `overlap_prop` and `thr50` maps.
+The complete code package is available as [`downloads/MesoConnect_Analysis_Code.zip`](downloads/MesoConnect_Analysis_Code.zip) and as browsable source under [`analysis-code/`](analysis-code). Original project paths and Human Connectome Project subject lists are retained where they document the study workflow, so users must edit configuration blocks before running the scripts elsewhere.
 
 ## Licensing
 
-The repository needs scoped terms because it combines several material types:
+The repository contains material governed by several sets of terms:
 
 - HCP-derived atlas maps and subject-count data: WU-Minn HCP Consortium Open Access Data Use Terms.
 - Original MesoConnect documentation and figures: CC BY 4.0.
-- Original website and shell-script code: MIT License.
+- Original code: MIT License.
 - FSL MNI152 template: FSL license for non-commercial use and redistribution subject to its conditions.
 
-See `LICENSE`, `data/MesoConnect_Atlas/LICENSE`, and `data/MesoConnect_Atlas/templates/README.md`. Do not replace the root notice with a single stock GitHub license.
+See `LICENSE`, `data/MesoConnect_Atlas/LICENSE`, and `data/MesoConnect_Atlas/templates/README.md`. Do not replace the scoped notices with a single stock repository license.
 
-## Scientific and implementation notes
+## Scientific notes
 
 - Atlas-constrained tractography is not an independent atlas validation because the atlas contributes to the tracking constraints.
-- The 1,000-streamline, 10,000,000-attempt, cutoff-0.05 application example differs from the manuscript atlas-generation workflow.
-- Applying the example to another pathway requires that pathway's seed, waypoint, target, exclusion, length, angle, and FOD-cutoff settings.
-- Add the final manuscript journal citation and DOI when they become available.
+- Applying the workflow to another pathway requires that pathway's seed, waypoint, target, exclusion, length, angle, and FOD-cutoff settings.
+- Add the final manuscript citation and DOI when they become available.

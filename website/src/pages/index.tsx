@@ -1,0 +1,85 @@
+import type {ReactNode} from 'react';
+import clsx from 'clsx';
+import Link from '@docusaurus/Link';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Layout from '@theme/Layout';
+import Heading from '@theme/Heading';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import styles from './index.module.css';
+
+const STEPS = [
+  {num: 1, title: 'Registration', tools: 'ANTs', link: '/docs/workflow/registration'},
+  {num: 2, title: 'Region warping', tools: 'ANTs · FSL', link: '/docs/workflow/warp-rois'},
+  {num: 3, title: 'Corridor construction', tools: 'FSL', link: '/docs/workflow/corridor-mask'},
+  {num: 4, title: 'Cutoff selection', tools: 'MRtrix3 · Python', link: '/docs/workflow/tune-cutoff'},
+  {num: 5, title: 'Tractography', tools: 'MRtrix3', link: '/docs/workflow/tractography'},
+  {num: 6, title: 'Bundle cleaning', tools: 'pyAFQ · DIPY', link: '/docs/workflow/cleaning'},
+  {num: 7, title: 'Quality control', tools: 'Python · FSLeyes', link: '/docs/workflow/visual-qc'},
+  {num: 8, title: 'Node profiles', tools: 'DIPY', link: '/docs/workflow/node-profiles'},
+  {num: 9, title: 'Group-level inference', tools: 'R · Python', link: '/docs/workflow/nodewise-stats'},
+];
+
+const iconProps = {width: 48, height: 48, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
+  strokeWidth: 1.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const};
+const DatabaseIcon = () => (<svg {...iconProps} aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>);
+const StepsIcon = () => (<svg {...iconProps} aria-hidden="true"><path d="M3 21h4v-4"/><path d="M7 17h4v-4"/><path d="M11 13h4v-4"/><path d="M15 9h4V5"/><path d="M3 21h18"/></svg>);
+const ChartIcon = () => (<svg {...iconProps} aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg>);
+
+type FeatureItem = {title: string; icon: ReactNode; description: ReactNode; link: string; linkText: string; external?: boolean};
+const FEATURES: FeatureItem[] = [
+  {title: 'Atlas', icon: <DatabaseIcon/>, description: <>Seven bilateral mesolimbic pathways in standard (MNI) 1 mm space, how the atlas was constructed, the seed and target regions, and the complete package for download.</>, link: '/docs/atlas/overview', linkText: 'Atlas and downloads'},
+  {title: 'Workflow', icon: <StepsIcon/>, description: <>Nine steps: registration, region warping, corridor construction, cutoff selection, tractography, bundle cleaning, quality control, along-tract profiling and group-level inference. Each step gives the procedure, the full script, verification criteria and illustrative output from an example dataset.</>, link: '/docs/workflow/overview', linkText: 'Workflow'},
+  {title: 'Node-wise Tract Explorer', icon: <ChartIcon/>, description: <>A browser-based viewer for along-tract results. It reads a results file locally and presents t-value profiles, clusters and the left–right comparison for each analysis.</>, link: 'pathname:///MesoConnect-Tutorial/explorer/', linkText: 'Open the Explorer', external: true},
+];
+
+function Feature({title, icon, description, link, linkText, external}: FeatureItem) {
+  return (
+    <div className={clsx('col col--4')}><div className="feature-card">
+      <div className="text--center" style={{marginBottom: '1rem', color: 'var(--ifm-color-primary)', display: 'flex', justifyContent: 'center'}}>{icon}</div>
+      <div className="text--center padding-horiz--md">
+        <Heading as="h3">{title}</Heading><p>{description}</p>
+        <Link className="button button--primary button--sm" to={link}>{linkText}</Link>
+      </div></div></div>);
+}
+
+function AtlasFigure() {
+  return (<section><div className="container" style={{maxWidth: '1000px', padding: '2rem 1rem 0'}}>
+    <img src={useBaseUrl('/img/fig_atlas_pathways.png')} alt="The seven pathways of the MesoConnect Atlas with their regions of interest" style={{width: '100%', height: 'auto', borderRadius: '6px'}}/>
+    <p className="text--center" style={{marginTop: '0.75rem', color: 'var(--ifm-color-emphasis-600)', fontSize: '0.9rem'}}>The seven bilateral pathways at the 50% threshold, in the three groupings used by the atlas authors. Figure from the MesoConnect repository (CC BY 4.0).</p>
+  </div></section>);
+}
+
+function Pipeline() {
+  return (<section className={styles.pipelineSection}><div className="container">
+    <Heading as="h2" className="text--center" style={{marginBottom: '0.5rem'}}>Workflow</Heading>
+    <p className="text--center" style={{marginBottom: '2rem', color: 'var(--ifm-color-emphasis-600)'}}>
+      Preprocessing is documented in the <a href="https://diffusiontensorimaging-repos.github.io/Diffusion-MRI-Preprocessing/docs/intro">Diffusion MRI Preprocessing tutorial</a>. The steps below begin from a T1-weighted image, a white-matter fibre orientation distribution and a brain mask.
+    </p>
+    <div className="pipeline-explorer">{STEPS.map((s, i) => (<div key={s.num}>
+      <Link to={s.link} className="pipeline-explorer__stage">
+        <div className="pipeline-explorer__number">{s.num}</div>
+        <div className="pipeline-explorer__content"><p className="pipeline-explorer__title">{s.title}</p><p className="pipeline-explorer__tools">{s.tools}</p></div>
+      </Link>{i < STEPS.length - 1 && <div className="pipeline-explorer__arrow">&darr;</div>}</div>))}</div>
+  </div></section>);
+}
+
+function Header() {
+  const {siteConfig} = useDocusaurusContext();
+  return (<header className={clsx('hero hero--primary', styles.heroBanner)}><div className="container"><div className={styles.heroInner}>
+    <p className={styles.heroLabel}>7 T mesolimbic connectivity atlas</p>
+    <Heading as="h1" className="hero__title">{siteConfig.title}</Heading>
+    <p className="hero__subtitle">{siteConfig.tagline}</p>
+    <div className={styles.buttons}>
+      <Link className="button button--secondary button--lg" to="/docs/">Introduction</Link>
+      <Link className="button button--outline button--lg" to="/docs/workflow/overview" style={{color: 'white', borderColor: 'rgba(255,255,255,0.5)', marginLeft: '1rem'}}>Workflow</Link>
+      <Link className="button button--outline button--lg" href="pathname:///MesoConnect-Tutorial/downloads/MesoConnect_Atlas.zip" style={{color: 'white', borderColor: 'rgba(255,255,255,0.5)', marginLeft: '1rem'}}>Download the atlas (.zip)</Link>
+    </div></div></div></header>);
+}
+
+export default function Home(): ReactNode {
+  return (<Layout title="Home" description="Tutorial for the MesoConnect Atlas: participant-level tractography, bundle cleaning and along-tract microstructure for mesolimbic pathways.">
+    <Header/><main>
+      <AtlasFigure/>
+      <section className={styles.features}><div className="container"><div className="row" style={{gap: '1.5rem 0'}}>{FEATURES.map((p, i) => <Feature key={i} {...p}/>)}</div></div></section>
+      <Pipeline/></main></Layout>);
+}

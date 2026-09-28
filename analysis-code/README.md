@@ -69,4 +69,4 @@ The scripts collectively use MRtrix3, FSL, ANTs, FreeSurfer, Python 3, AMICO, DI
 - Preserve command logs, software versions, exclusions, missing-data decisions, and parameter changes.
 - The atlas can be used as a template with MRtrix3, DSI Studio, FSL, DIPY, pyAFQ, or another validated tractography workflow; the public MRtrix3 example is not a software restriction.
 
-See the [microstructure tutorial](https://mesoconnect.vercel.app/microstructure/) for guided whole-tract and nodewise workflows.
+See the [MesoConnect microstructure workflow](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/docs/workflow/node-profiles) for guided whole-tract and nodewise analyses.

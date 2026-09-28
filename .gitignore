@@ -2,14 +2,14 @@
 .DS_Store
 
 # Local preview and editor files
-.vercel/
 .vscode/
 *.log
 
-# Dependency folders (the current site has no runtime dependencies)
+# Dependency and generated website folders
 node_modules/
 dist/
+build/
+.docusaurus/
 
 # Optional generated reports
 site-check-report.json
-# Vercel project-link metadata stays in the ignored .vercel directory above.
