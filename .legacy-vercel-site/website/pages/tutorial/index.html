@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#152b4f" />
+    <meta name="description" content="A MesoConnect tutorial for atlas-guided Inferior VTA-NAc tractography, optional pyAFQ cleaning, NODDI, and microstructure sampling." />
+    <title>Tractography tutorial | MesoConnect</title>
+    <link rel="icon" href="/assets/images/brand/mesoconnect-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <script src="/assets/js/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-brand" href="/" aria-label="MesoConnect home">
+          <img src="/assets/images/brand/mesoconnect-mark.svg" alt="" width="38" height="38" />
+          <span>MesoConnect <small>Atlas tutorial</small></span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle><span></span></button>
+        <nav class="site-nav" aria-label="Primary navigation" data-site-nav data-open="false">
+          <a href="/">Overview</a>
+          <a href="/atlas-documentation/">Atlas documentation</a>
+          <a href="/tutorial/" aria-current="page">Tutorial</a>
+          <a href="/microstructure/">Microstructure</a>
+          <a href="/methods/">Methods</a>
+          <a href="/resources/">Resources</a>
+          <a href="https://github.com/blelliott23/MesoConnect">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+      <header class="page-intro">
+        <div class="container">
+          <ol class="breadcrumb" aria-label="Breadcrumb"><li><a href="/">Home</a></li><li>Tutorial</li></ol>
+          <p class="eyebrow">Worked example · Inferior VTA–NAc</p>
+          <h1>From group atlas to native-space tractography</h1>
+          <p class="kicker">
+            Use the bilateral 50% MesoConnect atlas as a dilated anatomical corridor, transform it to a participant's
+            diffusion grid, and reconstruct left and right pathways. MRtrix3 is shown as one worked implementation;
+            experienced users may translate the same anatomical logic to another validated tractography platform.
+          </p>
+          <div class="button-row">
+            <a class="button" href="/examples/mesoconnect_inferior_vta_nac_template.sh" download>Download annotated script</a>
+            <a class="button button--light" href="/downloads/MesoConnect_Analysis_Code.zip" download>Download analysis code</a>
+            <a class="button button--light" href="/methods/#parameter-distinction">Compare parameter sets</a>
+          </div>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="container content-with-aside">
+          <aside class="sticky-aside">
+            <nav class="jump-nav" aria-label="Tutorial steps">
+              <h2>Tutorial steps</h2>
+              <ol>
+                <li><a href="#step-1" data-step-link><span class="jump-number">01</span><span>Identify inputs</span></a></li>
+                <li><a href="#step-2" data-step-link><span class="jump-number">02</span><span>Dilate the atlas</span></a></li>
+                <li><a href="#step-3" data-step-link><span class="jump-number">03</span><span>Build the corridor</span></a></li>
+                <li><a href="#step-4" data-step-link><span class="jump-number">04</span><span>Transform to native</span></a></li>
+                <li><a href="#step-5" data-step-link><span class="jump-number">05</span><span>Create exclusion</span></a></li>
+                <li><a href="#step-6" data-step-link><span class="jump-number">06</span><span>Transform endpoints</span></a></li>
+                <li><a href="#step-7" data-step-link><span class="jump-number">07</span><span>Run tractography</span></a></li>
+                <li><a href="#step-8" data-step-link><span class="jump-number">08</span><span>Inspect and record</span></a></li>
+                <li><a href="#step-9" data-step-link><span class="jump-number">09</span><span>Optional cleaning</span></a></li>
+                <li><a href="#step-10" data-step-link><span class="jump-number">10</span><span>Optional NODDI</span></a></li>
+                <li><a href="#step-11" data-step-link><span class="jump-number">11</span><span>Extract values</span></a></li>
+              </ol>
+            </nav>
+          </aside>
+
+          <article class="prose">
+            <div class="warning">
+              <p>
+                <strong>This is an application example, not the atlas-generation pipeline.</strong> The supplied example
+                requests 1,000 accepted streamlines, allows 10,000,000 seeding attempts, and uses an FOD cutoff of
+                0.05. The manuscript atlas was generated with pathway-specific settings, 2,500 accepted streamlines,
+                and up to 25,000,000 attempts. Do not describe the example settings as the manuscript settings.
+              </p>
+            </div>
+            <p>
+              Every value in angle brackets is a placeholder. Replace it with a real path before running a command;
+              do not type the angle brackets themselves. The downloadable script collects these values at the top so
+              you only need to edit them once.
+            </p>
+
+            <section id="step-1" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">1</span>
+                <div><h2>Identify the required files</h2><p>Confirm every atlas, region, transform, diffusion, and exclusion input.</p></div>
+              </div>
+              <div class="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">Placeholder</th><th scope="col">What it should point to</th></tr></thead>
+                  <tbody>
+                    <tr><td><code>&lt;LEFT_ATLAS_50&gt;</code><br /><code>&lt;RIGHT_ATLAS_50&gt;</code></td><td>Left and right Inferior VTA–NAc binary 50% atlas maps in MNI space.</td></tr>
+                    <tr><td><code>&lt;LEFT_VTA_ROI&gt;</code><br /><code>&lt;RIGHT_VTA_ROI&gt;</code></td><td>Left and right VTA endpoint regions in the same MNI grid.</td></tr>
+                    <tr><td><code>&lt;LEFT_NAC_ROI&gt;</code><br /><code>&lt;RIGHT_NAC_ROI&gt;</code></td><td>Left and right nucleus accumbens endpoint regions in the same MNI grid.</td></tr>
+                    <tr><td><code>&lt;NATIVE_BRAIN_MASK&gt;</code></td><td>Participant-native diffusion brain mask; this defines the output grid.</td></tr>
+                    <tr><td><code>&lt;MNI_TO_NATIVE_WARP&gt;</code></td><td>Transform that maps the MNI atlas grid into the participant diffusion grid.</td></tr>
+                    <tr><td><code>&lt;WHITE_MATTER_FOD&gt;</code></td><td>Participant normalized white-matter fiber orientation distribution image.</td></tr>
+                    <tr><td><code>&lt;BVEC_FILE&gt;</code><br /><code>&lt;BVAL_FILE&gt;</code></td><td>Participant diffusion gradient files.</td></tr>
+                    <tr><td><code>&lt;LEFT_HEMI_MASK&gt;</code><br /><code>&lt;RIGHT_HEMI_MASK&gt;</code></td><td>Native-space hemisphere masks used to prevent contralateral tracking.</td></tr>
+                    <tr><td><code>&lt;ATLAS_OUTPUT_DIR&gt;</code><br /><code>&lt;SUBJECT_OUTPUT_DIR&gt;</code></td><td>Writable group-derived and participant-specific output locations.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <ul class="checklist">
+                <li>Confirm that atlas and endpoint ROI images share the expected MNI grid.</li>
+                <li>Confirm that the warp direction is MNI-to-native, not native-to-MNI.</li>
+                <li>Confirm left/right orientation before creating any derived masks.</li>
+              </ul>
+              <div class="note">
+                <p>
+                  <strong>Download the endpoint ROIs from their original providers.</strong> The manuscript used the
+                  Trutti 7T VTA atlas at 25% probability and Harvard–Oxford nucleus accumbens masks. See the
+                  <a href="/resources/#roi-resources">ROI resource table</a> or the
+                  <a href="https://github.com/blelliott23/MesoConnect/blob/main/ROI_RESOURCES.md">complete GitHub download guide</a>
+                  for official links, citations, and the Pauli/CIT168 ventral-pallidum source used by other pathways.
+                </p>
+              </div>
+            </section>
+
+            <section id="step-2" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">2</span>
+                <div><h2>Dilate the 50% atlas maps by 2 mm</h2><p>Use one explicit spherical kernel so the intended expansion is easy to read and reproduce.</p></div>
+              </div>
+              <p>
+                Apply a 2 mm-radius spherical maximum filter to each binary map, then binarize the result. This is
+                clearer than repeating the default <code>-dilM</code> operation, and it states the physical radius
+                directly. Keep the original 50% files unchanged so the analysis remains auditable.
+              </p>
+              <pre data-copy><code>fslmaths &lt;LEFT_ATLAS_50&gt; -kernel sphere 2 -dilF -bin \
+  &lt;ATLAS_OUTPUT_DIR&gt;/left_inferior_vta_nac_mni152_1mm_thr50_dil2mm.nii.gz
+
+fslmaths &lt;RIGHT_ATLAS_50&gt; -kernel sphere 2 -dilF -bin \
+  &lt;ATLAS_OUTPUT_DIR&gt;/right_inferior_vta_nac_mni152_1mm_thr50_dil2mm.nii.gz</code></pre>
+              <div class="warning">
+                <p><strong>Dilation is a tradeoff.</strong> It can improve sensitivity to small alignment differences while reducing spatial specificity. A 2 mm spherical dilation is not voxel-for-voxel identical to two passes of FSL's default mean dilation. Record the atlas threshold, kernel, and radius.</p>
+              </div>
+            </section>
+
+            <section id="step-3" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">3</span>
+                <div><h2>Build the bilateral MNI-space corridor</h2><p>Combine both dilated atlas paths with bilateral VTA and NAc endpoint regions.</p></div>
+              </div>
+              <pre data-copy><code>fslmaths &lt;ATLAS_OUTPUT_DIR&gt;/right_inferior_vta_nac_mni152_1mm_thr50_dil2mm.nii.gz \
+  -add &lt;ATLAS_OUTPUT_DIR&gt;/left_inferior_vta_nac_mni152_1mm_thr50_dil2mm.nii.gz \
+  -add &lt;LEFT_VTA_ROI&gt; -add &lt;RIGHT_VTA_ROI&gt; \
+  -add &lt;LEFT_NAC_ROI&gt; -add &lt;RIGHT_NAC_ROI&gt; \
+  -bin &lt;ATLAS_OUTPUT_DIR&gt;/inferior_vta_accumbens_inclusion_corridor.nii.gz</code></pre>
+              <p>
+                The source shell script calls this an “inclusion box.” The tutorial uses <em>inclusion corridor</em>
+                because the mask defines the anatomical route that remains available to tractography.
+              </p>
+              <figure class="figure-placeholder">
+                <img src="/assets/images/figures/04-mni-corridor.svg" alt="Diagram of before-and-after overlays showing the dilated atlas tracts, endpoint regions, and final MNI-space inclusion corridor." width="1600" height="900" />
+                <figcaption>
+                  <strong>Recommended figure location:</strong> show matched MNI slices before and after the union. Use
+                  distinct colors for atlas paths, endpoint ROIs, and the final binarized corridor.
+                </figcaption>
+              </figure>
+            </section>
+
+            <section id="step-4" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">4</span>
+                <div><h2>Transform the corridor to native diffusion space</h2><p>Use the participant brain mask as the reference grid and nearest-neighbor interpolation.</p></div>
+              </div>
+              <pre data-copy><code>mkdir -p &lt;SUBJECT_OUTPUT_DIR&gt;/roi
+
+applywarp \
+  --in=&lt;ATLAS_OUTPUT_DIR&gt;/inferior_vta_accumbens_inclusion_corridor.nii.gz \
+  --ref=&lt;NATIVE_BRAIN_MASK&gt; \
+  --warp=&lt;MNI_TO_NATIVE_WARP&gt; \
+  --out=&lt;SUBJECT_OUTPUT_DIR&gt;/roi/inferior_vta_accumbens_inclusion_corridor.nii.gz \
+  --interp=nn</code></pre>
+              <p>
+                Nearest-neighbor interpolation preserves the binary mask. Immediately overlay the transformed result
+                on the diffusion reference; a command that completes without an error can still produce an
+                anatomically incorrect result.
+              </p>
+              <figure class="figure-placeholder">
+                <img src="/assets/images/figures/05-native-space-overlay.svg" alt="Diagram of axial, coronal, and sagittal overlays of the transformed inclusion corridor in participant-native diffusion space." width="1600" height="900" />
+                <figcaption>
+                  <strong>Recommended figure location:</strong> add axial, coronal, and sagittal views for one example
+                  participant. Mark left/right orientation and show whether the corridor contacts both endpoints.
+                </figcaption>
+              </figure>
+            </section>
+
+            <section id="step-5" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">5</span>
+                <div><h2>Create the outside-corridor exclusion mask</h2><p>Invert the corridor, then restrict that inverse to voxels inside the participant brain mask.</p></div>
+              </div>
+              <pre data-copy><code>fslmaths \
+  &lt;SUBJECT_OUTPUT_DIR&gt;/roi/inferior_vta_accumbens_inclusion_corridor.nii.gz \
+  -binv \
+  &lt;SUBJECT_OUTPUT_DIR&gt;/roi/inverse_inferior_vta_accumbens_inclusion_corridor.nii.gz
+
+fslmaths &lt;NATIVE_BRAIN_MASK&gt; \
+  -mas &lt;SUBJECT_OUTPUT_DIR&gt;/roi/inverse_inferior_vta_accumbens_inclusion_corridor.nii.gz \
+  &lt;SUBJECT_OUTPUT_DIR&gt;/roi/inferior_vta_accumbens_exclusion_corridor.nii.gz</code></pre>
+              <p>
+                Passing the final mask to <code>tckgen -exclude</code> prevents accepted streamlines from leaving the
+                atlas-defined route while keeping the exclusion volume limited to the participant brain.
+              </p>
+              <figure class="figure-placeholder">
+                <img src="/assets/images/figures/06-exclusion-mask.svg" alt="Diagram showing the native inclusion corridor, its binary inverse, and the brain-masked outside-corridor exclusion volume." width="1600" height="900" />
+                <figcaption>
+                  <strong>Recommended figure location:</strong> show three matched slices: the allowed corridor, its
+                  inverse, and the final brain-masked exclusion volume.
+                </figcaption>
+              </figure>
+            </section>
+
+            <section id="step-6" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">6</span>
+                <div><h2>Transform the endpoint regions</h2><p>Warp each VTA and NAc label separately to the same native diffusion grid.</p></div>
+              </div>
+              <pre data-copy><code>applywarp --in=&lt;LEFT_VTA_ROI&gt; --ref=&lt;NATIVE_BRAIN_MASK&gt; \
+  --warp=&lt;MNI_TO_NATIVE_WARP&gt; \
+  --out=&lt;SUBJECT_OUTPUT_DIR&gt;/roi/left_vta.nii.gz --interp=nn
+
+applywarp --in=&lt;RIGHT_VTA_ROI&gt; --ref=&lt;NATIVE_BRAIN_MASK&gt; \
+  --warp=&lt;MNI_TO_NATIVE_WARP&gt; \
+  --out=&lt;SUBJECT_OUTPUT_DIR&gt;/roi/right_vta.nii.gz --interp=nn
+
+applywarp --in=&lt;LEFT_NAC_ROI&gt; --ref=&lt;NATIVE_BRAIN_MASK&gt; \
+  --warp=&lt;MNI_TO_NATIVE_WARP&gt; \
+  --out=&lt;SUBJECT_OUTPUT_DIR&gt;/roi/left_accumbens.nii.gz --interp=nn
+
+applywarp --in=&lt;RIGHT_NAC_ROI&gt; --ref=&lt;NATIVE_BRAIN_MASK&gt; \
+  --warp=&lt;MNI_TO_NATIVE_WARP&gt; \
+  --out=&lt;SUBJECT_OUTPUT_DIR&gt;/roi/right_accumbens.nii.gz --interp=nn</code></pre>
+              <ul class="checklist">
+                <li>Overlay all four regions on the native diffusion reference.</li>
+                <li>Confirm that each region is nonempty and on the expected side.</li>
+                <li>Confirm that each seed and target contacts or is reachable within the corridor.</li>
+              </ul>
+            </section>
+
+            <section id="step-7" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">7</span>
+                <div><h2>Run left and right MRtrix3 tractography</h2><p>Seed from the VTA, require the ipsilateral NAc, and exclude the outside corridor and opposite hemisphere.</p></div>
+              </div>
+              <pre data-copy><code>mkdir -p &lt;SUBJECT_OUTPUT_DIR&gt;/tractography
+
+tckgen &lt;WHITE_MATTER_FOD&gt; \
+  &lt;SUBJECT_OUTPUT_DIR&gt;/tractography/left_inferior_vta_nac.tck \
+  -seed_image &lt;SUBJECT_OUTPUT_DIR&gt;/roi/left_vta.nii.gz \
+  -seed_unidirectional -select 1000 -seeds 10000000 \
+  -include &lt;SUBJECT_OUTPUT_DIR&gt;/roi/left_accumbens.nii.gz \
+  -exclude &lt;SUBJECT_OUTPUT_DIR&gt;/roi/inferior_vta_accumbens_exclusion_corridor.nii.gz \
+  -exclude &lt;RIGHT_HEMI_MASK&gt; \
+  -fslgrad &lt;BVEC_FILE&gt; &lt;BVAL_FILE&gt; \
+  -cutoff 0.05 -stop -nthreads 16 -force
+
+tckgen &lt;WHITE_MATTER_FOD&gt; \
+  &lt;SUBJECT_OUTPUT_DIR&gt;/tractography/right_inferior_vta_nac.tck \
+  -seed_image &lt;SUBJECT_OUTPUT_DIR&gt;/roi/right_vta.nii.gz \
+  -seed_unidirectional -select 1000 -seeds 10000000 \
+  -include &lt;SUBJECT_OUTPUT_DIR&gt;/roi/right_accumbens.nii.gz \
+  -exclude &lt;SUBJECT_OUTPUT_DIR&gt;/roi/inferior_vta_accumbens_exclusion_corridor.nii.gz \
+  -exclude &lt;LEFT_HEMI_MASK&gt; \
+  -fslgrad &lt;BVEC_FILE&gt; &lt;BVAL_FILE&gt; \
+  -cutoff 0.05 -stop -nthreads 16 -force</code></pre>
+            </section>
+
+            <section id="step-8" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">8</span>
+                <div><h2>Inspect, retain, and report</h2><p>Treat visual quality control and provenance as required outputs.</p></div>
+              </div>
+              <figure class="figure-placeholder">
+                <img src="/assets/images/figures/07-tractography-qc.svg" alt="Diagram of paired left and right native-space Inferior VTA-NAc streamline quality-control views." width="1600" height="900" />
+                <figcaption>
+                  <strong>Recommended figure location:</strong> show left and right streamline results with the VTA seed,
+                  NAc target, and corridor visible. A reader should be able to judge target entry, laterality, and course.
+                </figcaption>
+              </figure>
+              <ul class="checklist">
+                <li>Inspect the thresholded and 2 mm-sphere-dilated atlas in MNI space.</li>
+                <li>Inspect the native corridor, seed, target, and exclusion masks over the diffusion reference.</li>
+                <li>Confirm that the corridor remains connected to the intended seed and target.</li>
+                <li>Confirm that reconstructed streamlines remain ipsilateral and follow the expected trajectory.</li>
+                <li>Record the accepted streamline count and whether the seeding-attempt ceiling was reached.</li>
+                <li>Save at least one corridor overlay and one streamline QC image for each participant.</li>
+                <li>Save the exact command, software versions, atlas version, threshold, dilation kernel and radius, and any deviations.</li>
+              </ul>
+              <div class="warning">
+                <p>
+                  <strong>Do not generalize by filename substitution alone.</strong> The other six pathways require their
+                  manuscript-specific seed, waypoint, target, exclusion, length, angle, and FOD-cutoff logic.
+                </p>
+              </div>
+              <div class="button-row" style="margin-top: 1.8rem">
+                <a class="button" href="/resources/#troubleshooting">Troubleshoot common failures →</a>
+                <a class="button button--light" href="/methods/">Review methods</a>
+              </div>
+            </section>
+
+            <section id="step-9" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">9</span>
+                <div><h2>Optional: clean tractograms with pyAFQ</h2><p>Remove streamline outliers before voxelwise or nodewise microstructure extraction.</p></div>
+              </div>
+              <p>
+                The study script uses pyAFQ's <code>clean_bundle</code> routine and records the number of streamlines
+                retained for each tract. Edit the project roots, subject list, tract list, and thresholds, then inspect
+                both retained and removed streamlines. Cleaning choices can change the estimated tract profile.
+              </p>
+              <pre data-copy><code>python analysis-code/tracking_and_atlas/pyafq_tract_cleaning.py</code></pre>
+              <p><a href="/microstructure/#clean">Read the cleaning notes and QC checklist →</a></p>
+            </section>
+
+            <section id="step-10" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">10</span>
+                <div><h2>Optional: fit NODDI with modulated maps</h2><p>Estimate NDI, ODI, and free-water fraction from compatible multishell diffusion data.</p></div>
+              </div>
+              <p>
+                The supplied AMICO script saves tissue-fraction-modulated NDI and ODI maps and calculates fit RMSE.
+                Modulation supports tissue-weighted analyses that reduce partial-volume bias, following Parker et al.
+                Confirm that the acquisition supports the model, inspect fit quality, and report the model and software
+                versions rather than substituting NODDI values without validation.
+              </p>
+              <pre data-copy><code>python analysis-code/noddi/NODDI.py</code></pre>
+              <p><a href="/microstructure/#noddi">Follow the NODDI and tissue-weighting guide →</a></p>
+            </section>
+
+            <section id="step-11" class="tutorial-step" data-tutorial-step>
+              <div class="tutorial-step-heading">
+                <span class="step-number">11</span>
+                <div><h2>Optional: extract whole-tract or nodewise values</h2><p>Choose the summary that matches the scientific question before looking at results.</p></div>
+              </div>
+              <div class="grid-2">
+                <article class="card">
+                  <h3>Whole-tract value</h3>
+                  <p>Binarize a tract-density map, mask an aligned scalar image, and report one mean per tract.</p>
+                  <a href="/analysis-code/microstructure/whole_tract_microstructure.sh">Open the annotated shell script</a>
+                </article>
+                <article class="card">
+                  <h3>Nodewise profile</h3>
+                  <p>Orient streamlines consistently and sample NDI, ODI, and FWF across 100 tract nodes.</p>
+                  <a href="/analysis-code/noddi/nodewise_noddi.py">Open the nodewise Python script</a>
+                </article>
+              </div>
+              <p style="margin-top: 1.5rem">
+                See the <a href="/microstructure/">microstructure tutorial</a> for commands, denominator choices,
+                orientation checks, the Parker et al. citation, and links to every supplied analysis script. Researchers
+                reproducing or extending findings from the manuscript should use the
+                <a href="https://github.com/blelliott23/MesoConnect/tree/main/analysis-code">GitHub code directory</a>
+                as the versioned source.
+              </p>
+            </section>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand"><h2>MesoConnect</h2><p>A tutorial site for the pathway-resolved human mesolimbic connectivity atlas.</p></div>
+        <div class="footer-group"><h3>Explore</h3><a href="/atlas-documentation/">Atlas documentation</a><a href="/tutorial/">Tutorial</a><a href="/microstructure/">Microstructure</a><a href="/methods/">Methods</a></div>
+        <div class="footer-group"><h3>Project</h3><a href="/downloads/MesoConnect_Atlas.zip" download>Download complete atlas</a><a href="/downloads/MesoConnect_Analysis_Code.zip" download>Download analysis code</a><a href="https://github.com/blelliott23/MesoConnect">GitHub repository</a><a href="/resources/#citation">Citation</a><a href="/resources/#software">Software</a><a href="/resources/#organization">File organization</a></div>
+        <p class="footer-meta">MesoConnect Atlas · <span data-current-year>2026</span> · Website created using OpenAI Codex.</p>
+      </div>
+    </footer>
+  </body>
+</html>

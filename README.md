@@ -27,6 +27,7 @@ MesoConnect is a human 7 T diffusion tractography atlas of seven bilateral mesol
 | [`downloads/`](downloads) | Ready-to-download atlas and analysis-code ZIP archives with SHA-256 checksums |
 | [`examples/`](examples) | Annotated atlas-application example |
 | [`website/`](website) | Snapshot of the Docusaurus tutorial source that replaced the former static website implementation |
+| [`.legacy-vercel-site/`](.legacy-vercel-site) | Hidden archive of the former static site source, retained while its existing deployment remains temporarily active |
 | [`ROI_RESOURCES.md`](ROI_RESOURCES.md) | Official sources, thresholds, and citations for the anatomical regions used in atlas construction |
 
 There is one canonical atlas-data tree: `data/MesoConnect_Atlas/`. The atlas ZIP under `website/static/downloads/` is an identical mirror bundled with the tutorial website for convenient downloading.
@@ -56,6 +57,10 @@ The live tutorial is maintained and deployed from the separate [DiffusionTensorI
 https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/
 
 The `website/` directory in this repository is an independent source snapshot. It replaces the former static website, which remains recoverable from this repository's Git history. Changes made to the snapshot do not automatically update the live GitHub Pages site; live-site changes should be made in the upstream tutorial repository and then synchronized here.
+
+### Temporary legacy site
+
+The former static site remains temporarily available at https://mesoconnect.vercel.app/. Its source is retained under [`.legacy-vercel-site/`](.legacy-vercel-site), but the GitHub Pages tutorial above is now the primary website. The Vercel project is not Git-connected, so repository pushes do not automatically redeploy it.
 
 ### Preview the Docusaurus site locally
 
@@ -89,6 +94,7 @@ npm run build
 │   ├── docusaurus.config.ts
 │   ├── sidebars.ts
 │   └── package.json
+├── .legacy-vercel-site/             # Hidden archive of the former static site
 ├── ROI_RESOURCES.md                 # Third-party ROI sources and citations
 └── README.md
 ```
