@@ -1,12 +1,8 @@
 # Legacy MesoConnect static website
 
-This hidden directory preserves the source for the former static MesoConnect website while its existing Vercel deployment remains temporarily available at:
+This hidden directory preserves the source for the former static MesoConnect website. It is an archive only and is not used by the current Vercel deployment.
 
-https://mesoconnect.vercel.app/
-
-The primary tutorial is now the Docusaurus site:
-
-https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/
+The primary tutorial is the Docusaurus site at https://mesoconnect.vercel.app/.
 
 Do not treat this directory as the current tutorial source. Current Docusaurus source is mirrored under [`../website/`](../website/) and maintained upstream in [DiffusionTensorImaging-Repos/MesoConnect-Tutorial](https://github.com/DiffusionTensorImaging-Repos/MesoConnect-Tutorial).
 
@@ -19,4 +15,4 @@ cd .legacy-vercel-site
 npm run check
 ```
 
-The Vercel project is not Git-connected, so pushes to the MesoConnect repository do not automatically redeploy or replace the currently active production deployment.
+The active Vercel project builds [`../website/`](../website/) from the main MesoConnect GitHub repository. Running the commands in this archived directory only creates a local legacy build.

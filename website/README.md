@@ -1,12 +1,13 @@
 # MesoConnect Atlas Tutorial
 
-This directory contains a snapshot of the Docusaurus source for the MesoConnect Atlas Tutorial.
+This directory contains the Docusaurus source that Vercel builds for the MesoConnect Atlas Tutorial.
 
-- Live tutorial: https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/
+- Primary website: https://mesoconnect.vercel.app/
+- GitHub Pages copy: https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/
 - Upstream source: https://github.com/DiffusionTensorImaging-Repos/MesoConnect-Tutorial
 - Snapshot source commit: `8c747183cab6f3ac66400eaf0844c212744a5a44`
 
-The snapshot replaces the former static website that was stored in this repository. The old implementation remains recoverable through the MesoConnect Git history. This nested copy is not the deployment source for the live site: changes made here do not automatically update GitHub Pages. Make live-site changes in the upstream tutorial repository and then synchronize this directory.
+The source replaces the former static website that was stored in this repository. Vercel is connected to the main MesoConnect repository and uses `website/` as its project root, so pushes to `main` deploy this copy. Changes here do not update the separate GitHub Pages deployment; synchronize changes with the upstream tutorial repository when both versions should match.
 
 ## Site contents
 
@@ -39,6 +40,12 @@ Build and validate the static site with:
 
 ```bash
 npm run build
+```
+
+The default build uses the GitHub Pages base path. To reproduce Vercel's root-path build locally, use:
+
+```bash
+VERCEL=1 npm run build
 ```
 
 The production build is written to `build/`, which is ignored by Git.

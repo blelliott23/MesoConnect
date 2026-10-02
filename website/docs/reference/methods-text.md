@@ -7,7 +7,7 @@ title: "Suggested methods text"
 
 The paragraphs below describe the corridor workflow in the form required for a Method section and may be adapted. Values in square brackets are study-specific and should be replaced with the values used; values stated without brackets are those of the workflow as documented here.
 
-The whole tutorial is also available as a single document, with tables and figures numbered S1, S2 and so on and the scripts in an appendix: [PDF](pathname:///MesoConnect-Tutorial/supplement/MesoConnect_Supplementary_Methods.pdf) and [Word](pathname:///MesoConnect-Tutorial/supplement/MesoConnect_Supplementary_Methods.docx).
+The whole tutorial is also available as a single document, with tables and figures numbered S1, S2 and so on and the scripts in an appendix: [PDF](https://mesoconnect.vercel.app/supplement/MesoConnect_Supplementary_Methods.pdf) and [Word](https://mesoconnect.vercel.app/supplement/MesoConnect_Supplementary_Methods.docx).
 
 ## Tractography
 

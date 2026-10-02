@@ -2,18 +2,18 @@
 
 MesoConnect is a human 7 T diffusion tractography atlas of seven bilateral mesolimbic pathways. This repository is the canonical home of the atlas maps, manuscript analysis code, downloadable archives, and example files. The companion Docusaurus website provides the complete application and tractometry tutorial.
 
-**[Open the MesoConnect tutorial](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/)** · **[Download the atlas](downloads/MesoConnect_Atlas.zip)** · **[Download the analysis code](downloads/MesoConnect_Analysis_Code.zip)** · **[Browse the atlas files](data/MesoConnect_Atlas)**
+**[Open the MesoConnect tutorial](https://mesoconnect.vercel.app/)** · **[Download the atlas](downloads/MesoConnect_Atlas.zip)** · **[Download the analysis code](downloads/MesoConnect_Analysis_Code.zip)** · **[Browse the atlas files](data/MesoConnect_Atlas)**
 
 ## Start here
 
 | I want to… | Go to |
 | --- | --- |
-| Learn what MesoConnect contains | [Tutorial introduction](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/docs/) |
+| Learn what MesoConnect contains | [Tutorial introduction](https://mesoconnect.vercel.app/docs/) |
 | Download the complete atlas | [MesoConnect Atlas ZIP](downloads/MesoConnect_Atlas.zip) |
 | Browse individual NIfTI maps | [`data/MesoConnect_Atlas/`](data/MesoConnect_Atlas) |
-| Apply the atlas to participant data | [Nine-step workflow](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/docs/workflow/overview) |
-| Extract tract-level or nodewise microstructure | [Node-profile workflow](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/docs/workflow/node-profiles) |
-| Inspect nodewise results interactively | [Node-wise Tract Explorer](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/explorer/) |
+| Apply the atlas to participant data | [Nine-step workflow](https://mesoconnect.vercel.app/docs/workflow/overview) |
+| Extract tract-level or nodewise microstructure | [Node-profile workflow](https://mesoconnect.vercel.app/docs/workflow/node-profiles) |
+| Inspect nodewise results interactively | [Node-wise Tract Explorer](https://mesoconnect.vercel.app/explorer/) |
 | Run the original annotated example | [`examples/mesoconnect_inferior_vta_nac_template.sh`](examples/mesoconnect_inferior_vta_nac_template.sh) |
 | Reproduce or extend manuscript analyses | [`analysis-code/`](analysis-code) |
 | Locate the anatomical ROI sources | [`ROI_RESOURCES.md`](ROI_RESOURCES.md) |
@@ -26,8 +26,8 @@ MesoConnect is a human 7 T diffusion tractography atlas of seven bilateral mesol
 | [`analysis-code/`](analysis-code) | Manuscript and downstream analysis scripts for tractography, atlas construction, cleaning, NODDI, tractometry, and endpoint analyses |
 | [`downloads/`](downloads) | Ready-to-download atlas and analysis-code ZIP archives with SHA-256 checksums |
 | [`examples/`](examples) | Annotated atlas-application example |
-| [`website/`](website) | Snapshot of the Docusaurus tutorial source that replaced the former static website implementation |
-| [`.legacy-vercel-site/`](.legacy-vercel-site) | Hidden archive of the former static site source, retained while its existing deployment remains temporarily active |
+| [`website/`](website) | Docusaurus tutorial source deployed to Vercel from this GitHub repository |
+| [`.legacy-vercel-site/`](.legacy-vercel-site) | Hidden archive of the former static site source; not used for deployment |
 | [`ROI_RESOURCES.md`](ROI_RESOURCES.md) | Official sources, thresholds, and citations for the anatomical regions used in atlas construction |
 
 There is one canonical atlas-data tree: `data/MesoConnect_Atlas/`. The atlas ZIP under `website/static/downloads/` is an identical mirror bundled with the tutorial website for convenient downloading.
@@ -35,7 +35,7 @@ There is one canonical atlas-data tree: `data/MesoConnect_Atlas/`. The atlas ZIP
 ## Download the atlas
 
 - [Download `MesoConnect_Atlas.zip` from this repository](downloads/MesoConnect_Atlas.zip)
-- [Open the tutorial download page](https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/docs/atlas/downloads)
+- [Open the tutorial download page](https://mesoconnect.vercel.app/docs/atlas/downloads)
 - [Browse the individual atlas files](data/MesoConnect_Atlas)
 - [Review the third-party anatomical ROI sources](ROI_RESOURCES.md)
 
@@ -52,15 +52,15 @@ Subject denominators are reported in `data/MesoConnect_Atlas/mesoconnect_subject
 
 ## Tutorial website
 
-The live tutorial is maintained and deployed from the separate [DiffusionTensorImaging-Repos/MesoConnect-Tutorial](https://github.com/DiffusionTensorImaging-Repos/MesoConnect-Tutorial) repository:
+The primary tutorial is deployed by Vercel from this repository's [`website/`](website) directory:
 
-https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/
+https://mesoconnect.vercel.app/
 
-The `website/` directory in this repository is an independent source snapshot. It replaces the former static website, which remains recoverable from this repository's Git history. Changes made to the snapshot do not automatically update the live GitHub Pages site; live-site changes should be made in the upstream tutorial repository and then synchronized here.
+The source was synchronized from [DiffusionTensorImaging-Repos/MesoConnect-Tutorial](https://github.com/DiffusionTensorImaging-Repos/MesoConnect-Tutorial), whose GitHub Pages deployment remains available at https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/. The Vercel build uses the version committed here, so pushes to `main` automatically update the Vercel site. Upstream tutorial changes should be synchronized into `website/` before they are published on Vercel.
 
-### Temporary legacy site
+### Legacy static site
 
-The former static site remains temporarily available at https://mesoconnect.vercel.app/. Its source is retained under [`.legacy-vercel-site/`](.legacy-vercel-site), but the GitHub Pages tutorial above is now the primary website. The Vercel project is not Git-connected, so repository pushes do not automatically redeploy it.
+The former static-site implementation is retained under [`.legacy-vercel-site/`](.legacy-vercel-site) for reference only. It is not part of the active Vercel deployment.
 
 ### Preview the Docusaurus site locally
 
@@ -86,7 +86,7 @@ npm run build
 ├── analysis-code/                   # Manuscript and downstream analysis code
 ├── downloads/                       # Release ZIPs and checksums
 ├── examples/                        # Annotated application example
-├── website/                         # Docusaurus tutorial source snapshot
+├── website/                         # Docusaurus tutorial source deployed to Vercel
 │   ├── docs/                        # Tutorial and reference pages
 │   ├── src/                         # Landing page and custom styling
 │   ├── static/                      # Images, scripts, explorer, and download mirror

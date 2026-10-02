@@ -25,20 +25,24 @@ const DatabaseIcon = () => (<svg {...iconProps} aria-hidden="true"><ellipse cx="
 const StepsIcon = () => (<svg {...iconProps} aria-hidden="true"><path d="M3 21h4v-4"/><path d="M7 17h4v-4"/><path d="M11 13h4v-4"/><path d="M15 9h4V5"/><path d="M3 21h18"/></svg>);
 const ChartIcon = () => (<svg {...iconProps} aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg>);
 
-type FeatureItem = {title: string; icon: ReactNode; description: ReactNode; link: string; linkText: string; external?: boolean};
+type FeatureItem = {title: string; icon: ReactNode; description: ReactNode; link: string; linkText: string; staticFile?: boolean};
 const FEATURES: FeatureItem[] = [
   {title: 'Atlas', icon: <DatabaseIcon/>, description: <>Seven bilateral mesolimbic pathways in standard (MNI) 1 mm space, how the atlas was constructed, the seed and target regions, and the complete package for download.</>, link: '/docs/atlas/overview', linkText: 'Atlas and downloads'},
   {title: 'Workflow', icon: <StepsIcon/>, description: <>Nine steps: registration, region warping, corridor construction, cutoff selection, tractography, bundle cleaning, quality control, along-tract profiling and group-level inference. Each step gives the procedure, the full script, verification criteria and illustrative output from an example dataset.</>, link: '/docs/workflow/overview', linkText: 'Workflow'},
-  {title: 'Node-wise Tract Explorer', icon: <ChartIcon/>, description: <>A browser-based viewer for along-tract results. It reads a results file locally and presents t-value profiles, clusters and the left–right comparison for each analysis.</>, link: 'pathname:///MesoConnect-Tutorial/explorer/', linkText: 'Open the Explorer', external: true},
+  {title: 'Node-wise Tract Explorer', icon: <ChartIcon/>, description: <>A browser-based viewer for along-tract results. It reads a results file locally and presents t-value profiles, clusters and the left–right comparison for each analysis.</>, link: '/explorer/', linkText: 'Open the Explorer', staticFile: true},
 ];
 
-function Feature({title, icon, description, link, linkText, external}: FeatureItem) {
+function Feature({title, icon, description, link, linkText, staticFile}: FeatureItem) {
+  const {siteConfig} = useDocusaurusContext();
+  const destination = staticFile
+    ? `pathname://${siteConfig.baseUrl}${link.replace(/^\/+/, '')}`
+    : link;
   return (
     <div className={clsx('col col--4')}><div className="feature-card">
       <div className="text--center" style={{marginBottom: '1rem', color: 'var(--ifm-color-primary)', display: 'flex', justifyContent: 'center'}}>{icon}</div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading><p>{description}</p>
-        <Link className="button button--primary button--sm" to={link}>{linkText}</Link>
+        <Link className="button button--primary button--sm" to={destination}>{linkText}</Link>
       </div></div></div>);
 }
 
@@ -72,7 +76,7 @@ function Header() {
     <div className={styles.buttons}>
       <Link className="button button--secondary button--lg" to="/docs/">Introduction</Link>
       <Link className="button button--outline button--lg" to="/docs/workflow/overview" style={{color: 'white', borderColor: 'rgba(255,255,255,0.5)', marginLeft: '1rem'}}>Workflow</Link>
-      <Link className="button button--outline button--lg" href="pathname:///MesoConnect-Tutorial/downloads/MesoConnect_Atlas.zip" style={{color: 'white', borderColor: 'rgba(255,255,255,0.5)', marginLeft: '1rem'}}>Download the atlas (.zip)</Link>
+      <Link className="button button--outline button--lg" href={`pathname://${siteConfig.baseUrl}downloads/MesoConnect_Atlas.zip`} style={{color: 'white', borderColor: 'rgba(255,255,255,0.5)', marginLeft: '1rem'}}>Download the atlas (.zip)</Link>
     </div></div></div></header>);
 }
 

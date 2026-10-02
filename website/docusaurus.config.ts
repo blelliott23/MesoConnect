@@ -2,13 +2,20 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+// Vercel serves this site from the domain root. The upstream GitHub Pages copy
+// is served from a repository subpath, so local/GitHub Pages builds keep that
+// base URL while Vercel builds switch automatically to `/`.
+const isVercelBuild = process.env.VERCEL === '1';
+const deploymentBaseUrl = isVercelBuild ? '/' : '/MesoConnect-Tutorial/';
+const staticFileUrl = (path: string) => `pathname://${deploymentBaseUrl}${path.replace(/^\/+/, '')}`;
+
 const config: Config = {
   title: 'MesoConnect Atlas Tutorial',
   tagline: 'Participant-level tractography and along-tract microstructure with the MesoConnect mesolimbic atlas',
   favicon: 'img/favicon.ico',
   future: {v4: true},
-  url: 'https://diffusiontensorimaging-repos.github.io',
-  baseUrl: '/MesoConnect-Tutorial/',
+  url: isVercelBuild ? 'https://mesoconnect.vercel.app' : 'https://diffusiontensorimaging-repos.github.io',
+  baseUrl: deploymentBaseUrl,
   organizationName: 'DiffusionTensorImaging-Repos',
   projectName: 'MesoConnect-Tutorial',
   onBrokenLinks: 'warn',
@@ -30,9 +37,9 @@ const config: Config = {
       items: [
         {type: 'docSidebar', sidebarId: 'tutorialSidebar', position: 'left', label: 'Tutorial'},
         {to: '/docs/atlas/downloads', label: 'Downloads', position: 'left'},
-        {href: 'pathname:///MesoConnect-Tutorial/explorer/', label: 'Explorer', position: 'left'},
+        {href: staticFileUrl('/explorer/'), label: 'Explorer', position: 'left'},
         {href: 'https://diffusiontensorimaging-repos.github.io/Diffusion-MRI-Preprocessing/', label: 'Preprocessing', position: 'right'},
-        {href: 'https://github.com/DiffusionTensorImaging-Repos/MesoConnect-Tutorial', label: 'GitHub', position: 'right'},
+        {href: 'https://github.com/blelliott23/MesoConnect', label: 'GitHub', position: 'right'},
       ],
     },
     footer: {

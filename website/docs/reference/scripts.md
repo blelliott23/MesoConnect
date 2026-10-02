@@ -36,7 +36,7 @@ The complete set can be retrieved with the following command.
 
 ```bash
 mkdir -p mesoconnect_scripts && cd mesoconnect_scripts
-base="https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/scripts"
+base="https://mesoconnect.vercel.app/scripts"
 for f in 00_config.sh 00b_fod_estimation.sh 01_register_mni_to_t1.sh 02_warp_rois.sh \
          03_build_corridor_mask.sh 04_tune_cutoff.sh 04b_compare_cutoffs.py \
          05_tractography.sh 06_clean_bundles.py 07_visual_qc.py 08a_noddi_fit.py \

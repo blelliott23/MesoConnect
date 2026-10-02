@@ -7,7 +7,7 @@ title: "Downloads"
 
 ## Complete atlas
 
-The MesoConnect Atlas is distributed as one package, [MesoConnect_Atlas.zip](pathname:///MesoConnect-Tutorial/downloads/MesoConnect_Atlas.zip) (3.4 MB). The canonical copy and the individual files are in the atlas authors' [GitHub repository](https://github.com/blelliott23/MesoConnect); the copy served here is identical (SHA-256 [checksum file](pathname:///MesoConnect-Tutorial/downloads/MesoConnect_Atlas.zip.sha256)).
+The MesoConnect Atlas is distributed as one package, [MesoConnect_Atlas.zip](https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip) (3.4 MB). The canonical copy and the individual files are in the atlas authors' [GitHub repository](https://github.com/blelliott23/MesoConnect); the copy served here is identical (SHA-256 [checksum file](https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip.sha256)).
 
 The package contains the 28 atlas maps (seven pathways, two hemispheres, two map types), `mesoconnect_subject_counts.csv`, the FSL MNI152 1 mm brain template (Montreal Neurological Institute, MNI) used as the spatial reference, a README and the licence notice:
 
@@ -44,20 +44,20 @@ The atlas package does not redistribute the third-party regions used as seeds an
 
 | File | Hemisphere | Contents |
 |---|---|---|
-| [left_VTA_0.25_bin.nii.gz](pathname:///MesoConnect-Tutorial/atlas/left_VTA_0.25_bin.nii.gz) | Left | VTA seed (Trutti et al., 2021; 25% threshold) |
-| [right_VTA_0.25_bin.nii.gz](pathname:///MesoConnect-Tutorial/atlas/right_VTA_0.25_bin.nii.gz) | Right | VTA seed (Trutti et al., 2021; 25% threshold) |
-| [HPC_L_0.5_bin.nii.gz](pathname:///MesoConnect-Tutorial/atlas/HPC_L_0.5_bin.nii.gz) | Left | Hippocampus target (Harvard–Oxford; 50% threshold) |
-| [HPC_R_0.5_bin.nii.gz](pathname:///MesoConnect-Tutorial/atlas/HPC_R_0.5_bin.nii.gz) | Right | Hippocampus target (Harvard–Oxford; 50% threshold) |
+| [left_VTA_0.25_bin.nii.gz](https://mesoconnect.vercel.app/atlas/left_VTA_0.25_bin.nii.gz) | Left | VTA seed (Trutti et al., 2021; 25% threshold) |
+| [right_VTA_0.25_bin.nii.gz](https://mesoconnect.vercel.app/atlas/right_VTA_0.25_bin.nii.gz) | Right | VTA seed (Trutti et al., 2021; 25% threshold) |
+| [HPC_L_0.5_bin.nii.gz](https://mesoconnect.vercel.app/atlas/HPC_L_0.5_bin.nii.gz) | Left | Hippocampus target (Harvard–Oxford; 50% threshold) |
+| [HPC_R_0.5_bin.nii.gz](https://mesoconnect.vercel.app/atlas/HPC_R_0.5_bin.nii.gz) | Right | Hippocampus target (Harvard–Oxford; 50% threshold) |
 
 ## Setting up the files for the scripts
 
 The scripts expect the unzipped package as `ATLAS_DIR`, with the seed and target regions in a `roi_maps` folder inside it. The following commands produce that layout for the VTA → hippocampus example.
 
 ```bash
-curl -sSLO "https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/downloads/MesoConnect_Atlas.zip"
+curl -sSLO "https://mesoconnect.vercel.app/downloads/MesoConnect_Atlas.zip"
 unzip -q MesoConnect_Atlas.zip
 mkdir -p MesoConnect_Atlas/roi_maps
-base="https://diffusiontensorimaging-repos.github.io/MesoConnect-Tutorial/atlas"
+base="https://mesoconnect.vercel.app/atlas"
 for f in left_VTA_0.25_bin right_VTA_0.25_bin HPC_L_0.5_bin HPC_R_0.5_bin; do
   curl -sSL "$base/$f.nii.gz" -o "MesoConnect_Atlas/roi_maps/$f.nii.gz"
 done
